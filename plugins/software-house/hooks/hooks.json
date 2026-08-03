@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"{\\\"hookSpecificOutput\\\":{\\\"hookEventName\\\":\\\"SessionStart\\\",\\\"additionalContext\\\":\\\"SOFTWARE HOUSE - CHECKLIST DI PROCESSO (plugin software-house)\\\\n1. REGOLA ZERO: ogni richiesta del Business viene registrata SUBITO come task e nel registro di sviluppo del progetto. Niente si perde.\\\\n2. Classifica il TIER: 0 triviale / 1 bugfix / 2 feature / 3 design-UX / 4 strutturale. Nel dubbio scegli il tier superiore.\\\\n3. Ingaggia gli AGENTI del team, non agenti generici: ux-designer (Tier 3) poi analista-funzionale poi developer poi test-farm poi code-reviewer.\\\\n4. GATE NON NEGOZIABILE: code-reviewer prima di OGNI commit e push da Tier 1 in su. Il PM orchestra e decide, ma NON scrive di persona il codice sostanziale.\\\\n5. Documentazione aggiornata MENTRE si lavora. Verifiche a video reali, mai dati fabbricati.\\\\n6. Tier 4 e scelte irreversibili: si coinvolge il Business, solo con domande a scelta multipla. Architettura e infrastruttura: si girano al team dev, non al Business.\\\\n7. Il contesto specifico del progetto (rami, stack, chi sono i dev, incidenti) sta nel progetto, non qui.\\\"}}\"",
+            "statusMessage": "Carico la checklist della software house"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(git commit *)",
+            "command": "echo \"{\\\"systemMessage\\\":\\\"GATE: questo diff e' passato dal code-reviewer? E' obbligatorio da Tier 1 in su. Una regola scritta in un prompt NON e' deterministica: questo promemoria e' l'unica parte meccanica del gate.\\\"}\"",
+            "statusMessage": "Promemoria gate code-reviewer"
+          }
+        ]
+      }
+    ]
+  }
+}

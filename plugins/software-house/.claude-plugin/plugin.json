@@ -1,0 +1,7 @@
+{
+  "name": "software-house",
+  "version": "0.1.0",
+  "description": "Cinque ruoli specializzati orchestrati da un PM: analista-funzionale, ux-designer, developer, test-farm, code-reviewer. Principio: chi giudica non e' chi esegue.",
+  "author": { "name": "Alessandro Zanin" },
+  "hooks": "./hooks/hooks.json"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "ganzomoreno",
+  "owner": { "name": "Alessandro Zanin", "url": "https://github.com/ganzomoreno" },
+  "plugins": [
+    {
+      "name": "software-house",
+      "source": "./plugins/software-house",
+      "description": "Software house portatile: cinque ruoli specializzati (analista, ux-designer, developer, test-farm, code-reviewer) con pipeline e cancelli. Il mestiere, non il progetto.",
+      "version": "0.1.0"
+    }
+  ]
+}
