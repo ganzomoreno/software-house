@@ -50,6 +50,23 @@ E su ogni progetto in cui lo si vuole:
 
 Da quel momento i cinque agenti sono disponibili in quel progetto, insieme alla checklist di processo che compare a ogni avvio di sessione.
 
+### Perché arrivi anche in cloud e su altre macchine
+
+I comandi qui sopra scrivono la configurazione **sulla macchina**. Un ambiente cloud parte pulito e non la trova.
+
+Per averla ovunque, la si mette nel file di configurazione **del progetto** — `.claude/settings.json`, che è versionato e quindi viaggia col repository:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "ganzomoreno": { "source": { "source": "github", "repo": "ganzomoreno/software-house" } }
+  },
+  "enabledPlugins": { "software-house@ganzomoreno": true }
+}
+```
+
+Da lì vale per ogni sessione su quel progetto: locale, cloud, qualunque macchina, chiunque nel team. **È il motivo per cui questo repository è pubblico**: se fosse privato, le sessioni di chi non vi ha accesso fallirebbero il download.
+
 ---
 
 ## Cosa c'è dentro
