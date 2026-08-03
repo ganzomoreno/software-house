@@ -78,15 +78,28 @@ Esempio: *"riparti sempre dalla versione vigente"* è **mestiere** → sta qui. 
 
 Ogni progetto continua ad avere il proprio file di istruzioni con il proprio contesto. Il plugin non lo sostituisce: lo completa.
 
+**La linea non è netta oggi, e non deve esserlo.** Vedi la sezione successiva.
+
 ---
 
-## ⚠️ Stato: versione zero, da mettere alla prova
+## 🔄 Come questo pacchetto migliora: per attrito, non per purezza
 
-Questo pacchetto nasce **estraendo il metodo da un progetto solo**. È il modo classico in cui nasce una brutta astrazione: sembra generale, ed è un progetto travestito.
+Questo metodo **dipende dal contesto per natura**, e per natura viene corretto un progetto alla volta. Quindi:
 
-La misura fatta prima di estrarre: **il 63% del contenuto degli agenti sopravvive** alla rimozione dei riferimenti specifici, e ciò che sopravvive è il **protocollo** (scale di severità, criteri binari, obbligo di dichiarare i numeri, divieto di dati fabbricati), non consigli generici. È il motivo per cui l'estrazione ha senso.
+**Non si aspetta di essere puro per essere usato.** Si installa sui progetti così com'è, con dentro ancora i residui del progetto da cui nasce. L'attrito che genera **è il dato**: ogni volta che una regola non calza, quella regola ci sta dicendo di essere contesto travestito da mestiere. Da un esempio solo la genericità non si può dedurre; da tre si scopre.
 
-Ma **finché gira su un progetto solo, che sia generale resta un'ipotesi.** Il passo che la verifica è provarlo su un secondo progetto. Fino ad allora: versione 0.1.0.
+**Il contesto non è sporcizia da rimuovere: è il materiale con cui il metodo si raffina.** Una regola nata da un incidente specifico è la forma grezza di una regola generale. Il lavoro non è cancellarla, è farla maturare.
+
+**Il cricchetto che evita la discarica.** Se il contesto entra e non esce mai, questo pacchetto diventa la somma delle stranezze di tutti i progetti. La soglia che lo impedisce:
+
+> **Una regola entra qui quando è stata utile su almeno DUE progetti.**
+> Su uno solo, resta nel progetto.
+
+È l'unico vincolo che rende la direzione convergente invece che accumulativa.
+
+**Conseguenza:** non esiste una "v1.0 stabile". Non c'è un traguardo, c'è un livello di pulizia che sale. Il numero di versione è un'etichetta, non una promessa. Dichiarare "finito" un metodo di lavoro sarebbe l'unico vero errore.
+
+*(Modello di evoluzione deciso dal Business il 2026-08-03, e sostituisce l'inquadramento precedente — "versione zero da validare prima di usarla" — che aveva la direzione invertita.)*
 
 ---
 

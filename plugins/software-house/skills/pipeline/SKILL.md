@@ -58,3 +58,15 @@ Nel dubbio fra due tier, **scegli il più alto**.
 
 ## Cosa NON sta qui
 Rami, ambienti, stack, comandi, chi sono gli sviluppatori, gli incidenti passati, le utenze di prova: sono **contesto di progetto**. Vivono nel progetto. Questo plugin porta il **mestiere**.
+
+## Dove va una regola nuova — il cricchetto delle due volte
+Quando un lavoro insegna qualcosa, la regola che ne deriva va scritta. **Dove**, si decide così:
+
+| La regola è servita… | Va… |
+|---|---|
+| su **un** progetto | nel file di istruzioni di **quel** progetto |
+| su **due o più** progetti | **qui, nel plugin** — è mestiere dimostrato |
+
+È l'unico vincolo che tiene la cosa convergente. Senza, ogni specificità di ogni progetto finirebbe nel plugin, e la squadra porterebbe su ogni lavoro le stranezze di tutti gli altri.
+
+Il contrario è altrettanto vero: se una regola **qui** non calza su un progetto, non la si aggira — si guarda se era contesto travestito da mestiere. L'attrito è informazione, non fastidio.
