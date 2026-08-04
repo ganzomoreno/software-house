@@ -3,6 +3,7 @@
 > Copia questo file nel `CLAUDE.md` del progetto (o accanto ad esso) e compilalo.
 > Il plugin `software-house` porta il **mestiere**; qui va il **contesto**, che il plugin non può conoscere.
 > Se una voce non si applica al progetto, scrivilo esplicitamente invece di lasciarla vuota: "non applicabile" è un'informazione, il vuoto è un dubbio.
+> Ultimo aggiornamento: 2026-08-04
 
 ## Chi è chi
 - **Business / committente**: chi decide priorità e prodotto.

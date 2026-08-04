@@ -5,7 +5,7 @@
     {
       "name": "software-house",
       "source": "./plugins/software-house",
-      "description": "Software house portatile: cinque ruoli specializzati (analista, ux-designer, developer, test-farm, code-reviewer) con pipeline e cancelli. Il mestiere, non il progetto.",
+      "description": "Software house portatile: cinque ruoli specializzati (ux-designer, analista-funzionale, developer, test-farm, code-reviewer) orchestrati da Silvana, con pipeline e cancelli. Il mestiere, non il progetto.",
       "version": "0.1.0"
     }
   ]

@@ -1,8 +1,14 @@
 # 🎒 Software house portatile
 
+> **A cosa serve:** portare su qualunque progetto lo stesso metodo di sviluppo — cinque ruoli, una pipeline, dei cancelli obbligatori — aggiornabile da un punto solo.
+> **Per chi:** chi apre una sessione di sviluppo, su un progetto qualsiasi.
+> Ultimo aggiornamento: 2026-08-04
+
 Una squadra di sviluppo che **si porta con sé**: cinque ruoli specializzati, una pipeline e dei cancelli obbligatori, disponibili su **qualunque progetto**, aggiornabili da un punto solo.
 
 Non è una raccolta di suggerimenti: è un **metodo di lavoro**, quello che su Karica è stato costruito e corretto sul campo, ripulito da tutto ciò che era specifico di quel progetto.
+
+> 📖 **Il documento di riferimento è [`docs/METODO.md`](docs/METODO.md)**: cos'è il metodo, perché lo stiamo unificando, il piano in quattro mosse e il suo stato. Chi vuole capire prima di installare parte da lì.
 
 ---
 
@@ -24,7 +30,7 @@ Chi scrive il codice non scrive i test che lo promuovono, e non firma la propria
 | **`test-farm`** | Scrive i test partendo **dai criteri, non dal codice** | Non tocca il codice di produzione |
 | **`code-reviewer`** | **Cancello bloccante** prima di ogni commit | Non applica i fix: emette un verdetto |
 
-Li orchestra il **PM** — la sessione principale. Il PM decide, ma non sostituisce gli specialisti sulle modifiche sostanziali.
+Li orchestra **Silvana**, il coordinatore — la sessione principale. Silvana decide, ma non sostituisce gli specialisti sulle modifiche sostanziali.
 
 ---
 
@@ -74,11 +80,11 @@ Da lì vale per ogni sessione su quel progetto: locale, cloud, qualunque macchin
 ```
 plugins/software-house/
 ├── agents/          i cinque ruoli
-├── skills/pipeline/ il flusso: tier, cancelli, autonomia del PM
+├── skills/pipeline/ il flusso: tier, cancelli, autonomia di Silvana
 └── hooks/           checklist all'avvio + promemoria del cancello sul commit
 ```
 
-Per il flusso completo — quando serve l'UX, quali cancelli sono obbligatori, quanto decide il PM da solo — vedi [`skills/pipeline/SKILL.md`](plugins/software-house/skills/pipeline/SKILL.md).
+Per il flusso completo — quando serve l'UX, quali cancelli sono obbligatori, quanto decide Silvana da sola — vedi [`skills/pipeline/SKILL.md`](plugins/software-house/skills/pipeline/SKILL.md).
 
 ---
 

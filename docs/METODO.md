@@ -21,12 +21,14 @@ Chi scrive il lavoro non decide se funziona. Chi verifica non riceve le conclusi
 | Ruolo | Cosa fa | Cosa non fa |
 |---|---|---|
 | **Designer** | guarda la schermata con gli occhi di chi la usa | non scrive codice |
-| **Analista** | trasforma la richiesta in **criteri verificabili** (SE… ALLORA…) | non implementa |
+| **Analista** | trasforma la richiesta in **criteri binari e numerati** (SE… ALLORA…) | non implementa |
 | **Sviluppatore** | realizza *esattamente* quei criteri | non scrive i propri test, non pubblica |
 | **Collaudo** | scrive le prove **partendo dai criteri, non dal lavoro fatto** | non tocca ciò che è stato costruito |
 | **Revisore** | **cancello bloccante** prima di pubblicare | non applica correzioni: emette un verdetto |
 
-Sopra di loro c'è un **coordinatore** (il PM): decide, ordina, tiene i registri. Non sostituisce nessuno dei cinque.
+*(Dentro il pacchetto i cinque si chiamano `ux-designer`, `analista-funzionale`, `developer`, `test-farm`, `code-reviewer`: stessi ruoli, stessi confini, nome tecnico.)*
+
+Sopra di loro c'è un **coordinatore** (Silvana): decide, ordina, tiene i registri. Esegue da sola solo i lavori triviali: **non sostituisce nessuno dei cinque sulle modifiche sostanziali**.
 
 ---
 
@@ -57,6 +59,51 @@ Oggi il metodo **funziona**, ma esiste come un'abitudine, non come un oggetto. T
 | Ciò che si impara su un progetto | resta in quel progetto | **sale** nel metodo, se serve due volte |
 | Il coordinatore all'avvio | conosce solo quel progetto | sa **da dove veniamo** e cosa ha priorità |
 | Franka | non sa cosa succede nello sviluppo | riceve le consegne e le ricorda |
+
+---
+
+## 3-bis. Come funziona davvero — i tre piani
+
+> Questa è la parte che genera più confusione, ed è giusto che la generi: stiamo scrivendo **regole che valgono ovunque** mentre lavoriamo **dentro un progetto specifico**. Sembra una contraddizione. Non lo è, e il motivo è uno solo:
+
+### 🔑 La cartella in cui sei seduto non è la cartella in cui scrivi
+
+Una sessione si apre **dentro una cartella** — di solito quella del progetto su cui stai lavorando. Ma da lì si scrive **in cartelle diverse del computer**, e ognuna di quelle appartiene a un **repository diverso**.
+
+È come stare a una scrivania in un ufficio e spedire lettere a tre indirizzi. **La scrivania non decide la destinazione.**
+
+### I tre piani
+
+| | Cosa contiene | Dove sta fisicamente | Vale per |
+|---|---|---|---|
+| **1 · Come lavorare con te** | comunicazione, autonomia, chi è Silvana, le regole di metodo | un file **sul tuo computer**, `~/.claude/CLAUDE.md` — **fuori da ogni progetto** | ogni sessione su questa macchina |
+| **2 · Il mestiere** | i cinque ruoli, la pipeline, i cancelli, i livelli di prova | il repository **`software-house`** — un progetto **a sé**, che non appartiene a nessuno degli altri | ogni progetto che lo **accende** |
+| **3 · Il contesto** | rami, ambienti, stack, chi sono gli sviluppatori, incidenti, utenze di prova | dentro **ciascun** progetto (`CLAUDE.md`) | solo quel progetto |
+
+**Il piano 2 è la risposta alla domanda "come fa a valere ovunque".** Non sta dentro Karica né dentro Franka: sta **accanto** a loro. È un repository indipendente, e ogni progetto lo dichiara.
+
+### Come viene "acceso" su un progetto
+
+Dentro il progetto, in un file di configurazione (`.claude/settings.json`), si dichiarano due cose: **dove trovare il pacchetto** e **che lo si vuole usare**. Sono tre righe.
+
+Da quel momento, aprendo una sessione su quel progetto, i cinque ruoli ci sono già — senza copiarli, senza duplicarli.
+
+### Perché la configurazione va nel progetto e non sul computer
+
+C'è anche un modo di accenderlo **sul computer**, valido per tutte le sessioni di quella macchina. Funziona, ma ha un limite fatale:
+
+| Dove metti l'accensione | Vale in locale | Vale in **cloud** | Vale su un **altro computer** | Vale per **altre persone** |
+|---|---|---|---|---|
+| sul computer | ✅ | ❌ | ❌ | ❌ |
+| **dentro il progetto** | ✅ | ✅ | ✅ | ✅ |
+
+**In cloud la macchina è nuova ogni volta**: qualunque cosa tu abbia configurato sul tuo portatile lì non esiste. L'unica cosa che sopravvive è ciò che sta **dentro il repository**, perché il repository viaggia.
+
+> Per questo l'accensione va versionata nel progetto. È l'unico modo perché il metodo ci sia anche quando apri una sessione dal telefono.
+
+### Un'unica conseguenza, ed è quella che stiamo sistemando
+
+Se un progetto ha **una copia locale** dei ruoli, quella copia **vince** sul pacchetto. È comodo per un caso particolare, ma significa che le correzioni fatte al pacchetto **su quel progetto non arrivano**. È esattamente la situazione di Karica oggi, ed è la **mossa 2**.
 
 ---
 
@@ -163,9 +210,9 @@ La terza è quella che ha pagato di più: ha impedito due volte di costruire su 
 
 | | Mossa | Stato | Chi |
 |---|---|---|---|
-| 1 | Specialisti che raggiungono tutto | ✅ fatta | PM |
-| 2 | Una sola definizione dei ruoli | ⏳ da fare | PM |
-| 3 | Metodo attivo su ogni progetto | ⏳ 2 su 8 | PM |
-| 4 | Coordinatore ↔ Franka | ⏳ da fare | PM |
+| 1 | Specialisti che raggiungono tutto | ✅ fatta | Silvana |
+| 2 | Una sola definizione dei ruoli | ⏳ da fare | Silvana |
+| 3 | Metodo attivo su ogni progetto | ⏳ 2 su 8 | Silvana |
+| 4 | Coordinatore ↔ Franka | ⏳ da fare | Silvana |
 
 Le mosse 2 e 3 sono reversibili in pochi minuti. La 4 aggiunge due comportamenti, non cambia niente di esistente. **Nessuna delle quattro tocca il codice dei tuoi progetti.**
