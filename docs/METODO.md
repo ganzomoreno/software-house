@@ -208,11 +208,17 @@ La terza è quella che ha pagato di più: ha impedito due volte di costruire su 
 
 ## 8. Ordine e stato
 
-| | Mossa | Stato | Chi |
+| | Mossa | Stato | Chiusa il |
 |---|---|---|---|
-| 1 | Specialisti che raggiungono tutto | ✅ fatta | Silvana |
-| 2 | Una sola definizione dei ruoli | ⏳ da fare | Silvana |
-| 3 | Metodo attivo su ogni progetto | ⏳ 2 su 8 | Silvana |
-| 4 | Coordinatore ↔ Franka | ⏳ da fare | Silvana |
+| 1 | Specialisti che raggiungono tutto | ✅ **fatta** | 04/08 |
+| 2 | Una sola definizione dei ruoli | ✅ **fatta** | 04/08 |
+| 3 | Metodo attivo su ogni progetto | ✅ **fatta — 9 su 9** | 04/08 |
+| 4 | Coordinatore ↔ Franka | ✅ **regole scritte**, in uso da qui in avanti | 04/08 |
 
-Le mosse 2 e 3 sono reversibili in pochi minuti. La 4 aggiunge due comportamenti, non cambia niente di esistente. **Nessuna delle quattro tocca il codice dei tuoi progetti.**
+**Nessuna delle quattro ha toccato il codice dei progetti.**
+
+### Cosa è successo davvero, in sintesi
+
+- **Mossa 2** non è stata un semplice spostamento: le copie locali contenevano **conoscenza specifica di Karica** accumulata nel tempo. È stata **estratta prima** in un documento di progetto (9 temi, 8 trappole con l'incidente che le ha generate), poi le copie sono state archiviate. Il pacchetto è generico di proposito e non poteva ospitarla.
+- **Mossa 3** ha rivelato un tranello: su un progetto la cartella di configurazione era interamente ignorata, quindi il comando riportava *successo* senza aver salvato niente. **Scoperto solo verificando sul remoto** invece di fidarsi dell'esito. Ora quel progetto versiona la configurazione del metodo e continua a ignorare le scelte personali.
+- **Un presidio è rimasto scoperto, ed è dichiarato:** il controllo automatico che verificava i prompt dei ruoli leggeva le copie locali. Archiviato con esse. **Va ricreato qui**, dove i prompt vivono adesso — un guardiano deve stare accanto alla cosa che sorveglia. Finché non c'è, nessuno si accorge se un ruolo perde una regola.
