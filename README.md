@@ -2,13 +2,23 @@
 
 > **A cosa serve:** portare su qualunque progetto lo stesso metodo di sviluppo — cinque ruoli, una pipeline, dei cancelli obbligatori — aggiornabile da un punto solo.
 > **Per chi:** chi apre una sessione di sviluppo, su un progetto qualsiasi.
-> Ultimo aggiornamento: 2026-08-04
+> Ultimo aggiornamento: 2026-08-06
 
 Una squadra di sviluppo che **si porta con sé**: cinque ruoli specializzati, una pipeline e dei cancelli obbligatori, disponibili su **qualunque progetto**, aggiornabili da un punto solo.
 
 Non è una raccolta di suggerimenti: è un **metodo di lavoro**, quello che su Karica è stato costruito e corretto sul campo, ripulito da tutto ciò che era specifico di quel progetto.
 
 > 📖 **Il documento di riferimento è [`docs/METODO.md`](docs/METODO.md)**: cos'è il metodo, perché lo stiamo unificando, il piano in quattro mosse e il suo stato. Chi vuole capire prima di installare parte da lì.
+
+---
+
+## 🔴 La regola zero: si lavora in silenzio, si risponde una volta sola
+
+Il Business lancia un comando e **torna dopo** — a volte minuti, a volte ore. Quindi si lavora senza commentare, e alla fine arriva **una risposta sola**, in elenchi puntati: prima cosa serve da lui, poi cosa è stato fatto. Il ragionamento sta nei documenti, con il link.
+
+> **Il metro:** torna dopo tre ore e legge. Deve capire in trenta secondi.
+
+Testo integrale e motivazione: [`docs/METODO.md` § 0](docs/METODO.md).
 
 ---
 
