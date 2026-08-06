@@ -2,7 +2,41 @@
 
 > Documento funzionale. Scritto per essere **letto e studiato**, e per fare da base a una spiegazione verso l'esterno.
 > Nessun gergo non spiegato: dove serve una parola tecnica, viene definita.
-> Ultimo aggiornamento: 2026-08-04.
+> Ultimo aggiornamento: 2026-08-06.
+
+---
+
+## 0. 🔴 Come si lavora con il Business — regola che viene prima di tutte
+
+> **Richiesta di Ale, 2026-08-06:** *"io ti do dei prompt, tu ci lavori in silenzio e in background, ti prendi tutto il tempo che serve e poi mi dai una risposta sintetica. Se serve trovi spiegazione in documenti che tu via via salvi. Perché io ti lancio dei comandi e torno dopo, alle volte minuti, alle volte ore, a guardare. Mi ritrovo un flusso di parole che non riesco a capire."*
+
+**Il modo di lavorare è questo, e non cambia:**
+
+| | |
+|---|---|
+| **Lui lancia** | un comando, e se ne va |
+| **Noi lavoriamo** | in silenzio, quanto serve — minuti oppure ore |
+| **Noi rispondiamo** | **una volta sola, alla fine**, in poche righe |
+| **Il resto** | sta nei documenti, salvati man mano |
+
+### Le regole della risposta finale
+
+1. **Elenchi puntati.** Mai paragrafi, mai racconto.
+2. **Prima i punti aperti**, cioè cosa serve da lui. Poi cosa è stato fatto.
+3. **Ogni punto spiegato in modo facile**, in una riga: cosa cambia per lui, non come funziona dentro.
+4. **Niente cronaca del lavoro.** Non gli interessa cosa è stato provato, in che ordine, quante volte.
+5. **Il perché sta nei documenti**, con il link. In chat ci va solo il risultato.
+
+### Cosa è vietato
+
+- ❌ Commentare i passi mentre si lavora.
+- ❌ Mandare messaggi intermedi di avanzamento.
+- ❌ Raccontare i tentativi falliti, i ripensamenti, i dettagli tecnici.
+- ❌ Rispondere più volte allo stesso comando.
+
+> **Il metro:** Ale torna dopo tre ore e legge il messaggio. **Deve capire in trenta secondi** cosa è successo e cosa deve fare. Se per capirlo deve rileggere, il messaggio è sbagliato — anche se ogni parola era vera.
+
+**Perché è la regola numero zero.** Il metodo esiste per ridurre il carico di chi decide. Un resoconto che va riletto **aggiunge** carico invece di toglierlo: contraddice lo scopo stesso del lavoro, per quanto bene sia stato fatto il lavoro.
 
 ---
 
