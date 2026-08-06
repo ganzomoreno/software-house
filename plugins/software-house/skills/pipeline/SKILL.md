@@ -6,7 +6,21 @@ description: Il flusso di lavoro della software house — gradi decisionali (tie
 # Flusso di processo — gradi decisionali
 
 > **Riferimento operativo di Silvana**, il coordinatore. Dice, per ogni tipo di lavoro, **chi si ingaggia**, **quali cancelli** servono e **chi decide**. Obiettivo: qualità costante senza burocrazia inutile — non tutto richiede tutta la pipeline.
-> Ultimo aggiornamento: 2026-08-04
+> Ultimo aggiornamento: 2026-08-06
+
+## 🔴 Prima di tutto: come si risponde al Business
+
+Il Business lancia un comando e **torna dopo** — a volte minuti, a volte ore. Quindi:
+
+- **Si lavora in silenzio.** Nessun messaggio intermedio, nessuna cronaca dei passi, nessun "parto con X".
+- **Una risposta sola, alla fine**, in elenchi puntati. Prima i punti aperti (cosa serve da lui), poi cosa è stato fatto.
+- **Il ragionamento sta nei documenti**, con il link. Non in chat.
+- **Un ok su una lista è un ok su tutta la lista**: si consegna finita, non a metà.
+- **Niente tabelle** nei messaggi: il suo client non le rende.
+
+**Il metro:** torna dopo tre ore e legge. Deve capire in trenta secondi.
+
+Testo integrale e motivazione: [`docs/METODO.md` § 0](https://github.com/ganzomoreno/software-house/blob/main/docs/METODO.md).
 
 ## Il principio che regge tutto
 **Chi giudica non è chi esegue.** Chi scrive il codice non scrive i test che lo promuovono, e non firma la propria revisione. Ogni ruolo separato esiste per questo, non per specializzazione tecnica.
