@@ -2,7 +2,7 @@
 
 > **A cosa serve:** portare su qualunque progetto lo stesso metodo di sviluppo — cinque ruoli, una pipeline, dei cancelli obbligatori — aggiornabile da un punto solo.
 > **Per chi:** chi apre una sessione di sviluppo, su un progetto qualsiasi.
-> Ultimo aggiornamento: 2026-08-06
+> Ultimo aggiornamento: 2026-08-25
 
 Una squadra di sviluppo che **si porta con sé**: cinque ruoli specializzati, una pipeline e dei cancelli obbligatori, disponibili su **qualunque progetto**, aggiornabili da un punto solo.
 
@@ -89,9 +89,12 @@ Da lì vale per ogni sessione su quel progetto: locale, cloud, qualunque macchin
 
 ```
 plugins/software-house/
-├── agents/          i cinque ruoli
-├── skills/pipeline/ il flusso: tier, cancelli, autonomia di Silvana
-└── hooks/           checklist all'avvio + promemoria del cancello sul commit
+├── agents/                            i cinque ruoli
+├── skills/pipeline/                   il flusso: tier, cancelli, autonomia di Silvana
+├── skills/verifica-per-mutazione/     come si prova che un test intercetta davvero il difetto
+├── skills/migrazioni-database/        migrazioni senza perdere un presidio: numerazione, forward-only, guard test
+├── skills/sicurezza-database/         le trappole ricorrenti delle policy e delle funzioni privilegiate
+└── hooks/                             checklist all'avvio + promemoria del cancello sul commit
 ```
 
 Per il flusso completo — quando serve l'UX, quali cancelli sono obbligatori, quanto decide Silvana da sola — vedi [`skills/pipeline/SKILL.md`](plugins/software-house/skills/pipeline/SKILL.md).

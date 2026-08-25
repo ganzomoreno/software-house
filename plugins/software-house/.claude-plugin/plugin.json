@@ -1,6 +1,6 @@
 {
   "name": "software-house",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Cinque ruoli specializzati orchestrati da Silvana, il coordinatore: analista-funzionale, ux-designer, developer, test-farm, code-reviewer. Principio: chi giudica non e' chi esegue.",
   "author": { "name": "Alessandro Zanin" }
 }
