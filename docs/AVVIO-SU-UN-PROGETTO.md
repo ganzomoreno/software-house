@@ -76,9 +76,14 @@ Aggiungi al CLAUDE.md questa sezione, esattamente com'è:
 > criteri negativi dell'analista (chi non deve potere) e le prove sulle transizioni
 > vietate: sono correttezza funzionale, non sicurezza di sistema.
 
-PASSO 4 — Portalo sul ramo
-Fai commit delle modifiche e portale sul ramo di lavoro. Non unire nulla al ramo
-principale senza chiedermelo.
+PASSO 4 — Portalo sul ramo giusto
+Fai commit delle modifiche. Poi dimmi su QUALE ramo partono normalmente le mie
+sessioni di lavoro su questo progetto, leggendolo dal CLAUDE.md: potrebbe non
+essere il ramo principale.
+Se il lavoro non è già su quel ramo, portacelo seguendo la convenzione del
+progetto. Se la via prevista è un'unione ma questa trascinerebbe file che non
+c'entrano con questo lavoro, FERMATI e dimmelo: non forzare, e proponimi la
+via corretta. Non unire nulla al ramo principale senza chiedermelo.
 
 RISPONDIMI UNA VOLTA SOLA, alla fine, in elenchi puntati:
 - prima cosa serve da me (le voci di contesto mancanti del PASSO 2, e ogni dubbio)
@@ -90,10 +95,23 @@ Niente cronaca dei passi, niente tabelle.
 
 La Fase 1 lascia il suo lavoro **su un ramo**, come deve. Ma la sessione della Fase 2 parte dal ramo che le indichi: se è il ramo principale, **non vedrà nulla di quanto scritto in Fase 1**.
 
-Quindi, prima di aprire la sessione nuova, una delle due:
+Quindi, prima di aprire la sessione nuova, il lavoro della Fase 1 deve arrivare **sul ramo da cui partiranno le tue sessioni** — che **non è per forza il ramo principale**: su molti progetti si lavora su un ramo dedicato a un ambiente.
 
-- **unisci il ramo della Fase 1** al ramo principale del progetto (la via normale), **oppure**
-- **apri la Fase 2 direttamente su quel ramo**, se preferisci provare prima di unire.
+Tre modi, in ordine di preferenza:
+
+1. **Apri la Fase 2 direttamente sul ramo della Fase 1.** È il modo più semplice e non muove niente. Se vuoi solo provare, fermati qui.
+2. **Porta il lavoro sul ramo di lavoro seguendo la convenzione del progetto** (unione, oppure ricopiatura dei singoli commit: decide il progetto, non questa procedura).
+3. **Uniscilo al ramo principale**, se il progetto lavora così.
+
+### ⚠️ Attenzione a una trappola: da dove nasce il ramo della Fase 1
+
+Una sessione crea il proprio ramo partendo dal ramo su cui è stata aperta — spesso quello **principale**. Se il tuo ramo di lavoro è un altro, unire il ramo della Fase 1 significa **trascinarci dentro tutto il ramo principale**, non le tue tre righe di documentazione.
+
+Su progetti con più ambienti questa manovra è quasi sempre **vietata** (si propaga solo in una direzione, e verso l'ambiente di prova si porta roba scelta a mano). Il sintomo è inconfondibile: **l'unione mostra decine di file in conflitto invece dei due o tre che hai toccato.**
+
+> **La regola:** se l'unione tocca file che non c'entrano con la Fase 1, **fermati**. La via giusta è quella prevista dal progetto per portare un lavoro su quel ramo — quasi sempre ricopiare i singoli commit, uno per volta. Tre righe di documentazione non giustificano mai di mettere le mani in un lavoro in corso.
+
+**E in ogni caso: apri la Fase 2 sul ramo dove il lavoro è finito davvero.**
 
 > Attenzione a cosa dipende da cosa. La configurazione `.claude/settings.json` decide **se il plugin arriva**; il `CLAUDE.md` decide **come si comporta** (le discipline escluse, il contesto). Se la configurazione c'era già da prima, il plugin arriva comunque — ma le esclusioni scritte in Fase 1 restano invisibili finché il ramo non è unito. **Il sintomo è subdolo:** la squadra c'è, sembra tutto a posto, e applica discipline che avevi escluso.
 
