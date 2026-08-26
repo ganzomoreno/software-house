@@ -3,7 +3,7 @@
 > **Cos'è questo documento.** Il manuale tecnico-funzionale completo: come funziona la squadra, cosa fa ognuno, quali discipline possiede, come si installa, come si estende.
 > **Com'è fatto.** A cipolla: ogni strato è più profondo del precedente. Fermati quando ti basta. Lo **Strato 0** si legge in un minuto; l'**Appendice** contiene ogni dettaglio.
 > **Per chi.** Il Business che vuole capire e spiegare · chi apre una sessione e deve lavorare · chi vuole estendere il metodo.
-> Ultimo aggiornamento: 2026-08-26 · plugin v0.11.0
+> Ultimo aggiornamento: 2026-08-26 · plugin v0.12.0
 
 **Documenti collegati:** il *perché* di tutto questo, e il piano, stanno in [`METODO.md`](METODO.md). Il modello da compilare su ogni progetto è [`../templates/CONTESTO-PROGETTO.md`](../templates/CONTESTO-PROGETTO.md).
 
@@ -634,7 +634,7 @@ La confusione più frequente è fra la cartella in cui si lavora e il posto da c
 
 ## 6.2 Come si installa — due modi, e quale scegliere
 
-### ⭐ Modo A — collegata (preferito)
+### Modo A — collegata (funziona **solo in locale**, a due condizioni)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/ganzomoreno/software-house/main/scripts/collega.sh | bash
@@ -651,13 +651,17 @@ Aggancia la software house al progetto come **sottomodulo git** in `.software-ho
 
 **Aggiornare significa spostare un puntatore di un commit.** Il diff che vedi è una riga, non un file ricopiato — e nessuno può modificare per sbaglio una copia locale, perché copie locali non ce ne sono.
 
-> ⚠️ **Due cose vanno verificate sul campo la prima volta**, e finché non lo sono non dare per scontato che funzioni:
-> 1. **I collegamenti per gli agenti.** Per le discipline sono supportati e documentati: Claude Code segue il collegamento e legge `SKILL.md` dalla cartella di destinazione. Per gli **agenti** non è documentato.
-> 2. **Il recupero del sottomodulo in ambiente cloud.** Se l'ambiente clona il progetto senza i sottomoduli, `.software-house/` resta vuota e **tutti i collegamenti puntano nel vuoto**: non carica niente.
+> ## Verificato il 26/08/2026 — dove funziona e dove no
 >
-> **Il sintomo di entrambi è identico** a quello del marketplace rotto — la squadra non compare — quindi va distinto guardando se `.software-house/` contiene davvero i file.
+> **✅ In locale, su una macchina che controlli tu.** Provato su Windows: cinque agenti agganciati, discipline aperte per nome, Silvana che classifica e delega. Ma richiede **due condizioni**, e senza nemmeno una delle due fallisce in silenzio:
 >
-> Nota minore e innocua: il comando che elenca le discipline [non mostra quelle collegate](https://github.com/anthropics/claude-code/issues/14836), anche quando funzionano. Non fidarti di quell'elenco per la verifica: chiedi invece all'agente di aprirne una per nome.
+> 1. **Il sottomodulo va recuperato**: si clona con `--recurse-submodules`, oppure dopo il clone si esegue `git submodule update --init --recursive`. Se manca, `.software-house/` è vuota e tutti i collegamenti puntano nel vuoto.
+> 2. **Su Windows serve la Modalità sviluppo accesa** (*Impostazioni → Privacy e sicurezza → Per sviluppatori*) più `git config --global core.symlinks true`, **prima del clone**. Senza, git scrive i collegamenti come **file di testo contenenti il percorso**: sembrano esserci e non funzionano.
+>    Il controllo: `Get-Item .claude\agents\developer.md | Select-Object LinkType` deve dire `SymbolicLink`.
+>
+> **❌ In Claude Code su web, no.** L'ambiente **clona senza i sottomoduli**, ogni volta. `.software-house/` arriva vuota, niente si carica, e `git submodule status` mostra il commit preceduto da `-`. Non è aggirabile in modo affidabile: un hook che esegua `git submodule update --init` girerebbe comunque **dopo** l'enumerazione di agenti e discipline.
+>
+> **Quindi: puntamenti se lavori in locale, copia se lavori dal web. Non c'è un modo che vada bene per entrambi**, e un progetto che sceglie i puntamenti condanna le proprie sessioni web a trovare collegamenti rotti — che è peggio del non averli, perché sembrano installati.
 
 ### Modo B — copiata (ripiego che funziona sempre)
 
@@ -727,11 +731,16 @@ Verificato sul campo la transizione copia → collegamento: nessun residuo, cont
 | Cosa entra nella storia del progetto | un puntatore e dei collegamenti (~2 KB) | i file, tutti (~2.000 righe) |
 | Aggiornare | sposta un puntatore | ricopia i file |
 | Rischio di modifiche locali divergenti | nessuno: non c'è una copia | reale, mitigato da un avvertimento |
-| Funziona ovunque senza verifiche | **da verificare** | **sì** |
+| Funziona in locale | **sì**, a due condizioni | **sì** |
+| Funziona in Claude Code su web | **no** — sottomoduli non clonati | **sì** |
 
 > ✅ **Il Modo B è verificato sul campo** (Karica, 26/08/2026): cinque agenti disponibili in sessione e discipline aperte per nome con il contenuto giusto. Il Modo A resta da verificare.
 
-**Parti dal Modo A. Se la verifica in sessione nuova non lo conferma, passa al Modo B senza rimpianti**: la sostanza del metodo è la stessa, cambia solo come arriva.
+**Decide una domanda sola: da dove aprirai le sessioni su questo progetto?**
+
+- **Solo dal tuo computer** → Modo A. È la forma più pulita, e le due condizioni si soddisfano una volta sola.
+- **Anche dal web, o altre persone lo faranno** → Modo B. Non chiede niente all'ambiente e funziona per chiunque.
+- **Non lo sai ancora** → Modo B. Si passa al Modo A in qualsiasi momento; il contrario costa una sessione sprecata a capire perché la squadra non c'è.
 
 > In entrambi i modi la versione è **bloccata**, ed è giusto così: un aggiornamento della software house non deve cambiare il metodo sotto i piedi a chi sta lavorando. Si aggiorna quando lo decidi tu.
 
