@@ -14,7 +14,7 @@
 | **Skill** | Un **manuale di mestiere**. Non lavora da sola: la apre un agente quando le serve. | `migrazioni-database` |
 | **Hook** | Un **cancello automatico**. Scatta da solo, nessuno lo può dimenticare. | il promemoria prima del commit |
 
-La differenza che conta: **un agente lo chiami, una skill si accende da sola** quando il lavoro la riguarda.
+La differenza che conta: **un agente lo chiami, una skill la apre l'agente**. Attenzione: dentro un agente le skill **non si accendono da sole** — vanno precaricate o richiamate per nome. È il punto spiegato in fondo, nella *manopola del costo*.
 
 ---
 
@@ -68,9 +68,9 @@ Se tu non dici niente, **sceglie lei**. Se tu dici un nome, **usa quello**.
 
 **Cosa NON fa.** **Non scrive i propri test** (li scrive la test-farm) e **non fa commit**. È il principio che regge tutto: chi giudica non è chi esegue.
 
-**Skill in dotazione.** Nessuna precaricata, ma si accendono da sole quando il lavoro le tocca:
-- tocca il database → si apre `migrazioni-database`
-- tocca permessi, ruoli o policy → si apre `sicurezza-database`
+**Skill in dotazione.** Nessuna precaricata. Il suo prompt gli dice di aprirle per nome quando servono:
+- tocca il database → apre `migrazioni-database` prima di scrivere
+- tocca permessi, ruoli o policy → apre `sicurezza-database`
 
 ---
 
@@ -114,12 +114,12 @@ Sono manuali, non persone. Ognuna nasce da un errore vero, pagato su un progetto
 ### `migrazioni-database`
 **Il problema che risolve:** riscrivere una parte del database partendo da una versione vecchia, e cancellare senza accorgersene una protezione che qualcuno aveva aggiunto dopo. È già costato una riparazione d'emergenza su un progetto vero.
 **Cosa impone:** guardare qual è davvero l'ultima versione prima di riscrivere, non tornare mai indietro, ed elencare per nome le protezioni conservate.
-**Chi la usa:** `developer` e `code-reviewer`, **quando il lavoro tocca il database**.
+**Chi la usa:** `developer` e `code-reviewer`, che la aprono per nome **quando il lavoro tocca il database**.
 
 ### `sicurezza-database`
 **Il problema che risolve:** proteggere una cosa solo nell'applicazione, lasciandola aperta a chi chiama il sistema da fuori.
 **Cosa impone:** la regola vive nel database, non nello schermo. Se una cosa non deve essere possibile, deve essere *impossibile*, anche saltando l'interfaccia.
-**Chi la usa:** `developer` e `code-reviewer`, **quando il lavoro tocca permessi, ruoli o policy**.
+**Chi la usa:** `developer` e `code-reviewer`, che la aprono per nome **quando il lavoro tocca permessi, ruoli o policy**.
 
 ---
 
@@ -135,6 +135,24 @@ Non serve una sintassi speciale. Basta il nome.
 
 E il contrario, quando vuoi accelerare:
 - *"È una modifica da niente, non serve tutta la pipeline."*
+
+---
+
+## La manopola del costo — tre livelli, non uno
+
+Un agente parte con un contesto **vuoto**: vede il suo prompt, la consegna, e nient'altro. In particolare **non vede l'elenco delle skill disponibili nella sessione**. Questo cambia tutto: una skill che sta lì fuori, per lui, non esiste — a meno che qualcuno gliela metta in mano.
+
+Ci sono tre modi per fargliela avere, e costano in modo diverso.
+
+| Livello | Come funziona | Quanto costa | Quando si usa |
+|---|---|---|---|
+| **1 · Precaricata** | Il testo completo della disciplina entra nell'agente **all'avvio, sempre** | Si paga a ogni chiamata, anche quando non serve | Solo per ciò che serve **sempre** a quel mestiere |
+| **2 · Richiamata dal prompt** | Il prompt dell'agente dice: *«se tocchi il database, apri `migrazioni-database`»* | Si paga **solo** quando la condizione scatta | Discipline che servono **a volte** |
+| **3 · Nominata nella consegna** | Silvana (o tu) scrive nella richiesta: *«usa la disciplina X»* | Si paga solo quella volta | Quando decidi tu, caso per caso |
+
+**Il terzo livello è la tua manopola.** Puoi sempre dire: *«fai fare la review al code-reviewer, e digli di usare `sicurezza-database`»*. La consegna arriva dentro l'agente, quindi l'istruzione funziona.
+
+E puoi anche lasciar decidere Silvana: lei vede il lavoro, sa cosa tocca, e può nominare la disciplina giusta quando delega.
 
 ---
 

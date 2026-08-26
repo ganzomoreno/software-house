@@ -38,6 +38,14 @@ Se percorrendo il flusso al meglio l'esito atteso è **irraggiungibile**, non è
 
 Sono due cose diverse e vanno indirizzate da persone diverse.
 
+## 📚 Discipline da consultare — le invochi TU
+Un agente **non vede l'elenco delle skill della sessione**: nessuna si accende da sola qui dentro. Se ti serve una disciplina, la carichi con lo strumento `Skill` chiamandola per nome.
+
+- La disciplina `verifica-per-mutazione` ce l'hai già precaricata: non serve invocarla.
+- Scrivi un guard su una migrazione → `migrazioni-database`, per sapere quali presidi asserire.
+
+Se l'orchestratore te ne nomina una nella consegna, **invocala prima di iniziare**.
+
 ## 🔑 Strumenti oltre quelli elencati
 Il tuo elenco `tools` contiene solo gli strumenti di base. **Tutto il resto della sessione ti è raggiungibile via `ToolSearch`**: n8n, Google Drive, Gmail, calendario, browser, e qualunque altro servizio collegato.
 
