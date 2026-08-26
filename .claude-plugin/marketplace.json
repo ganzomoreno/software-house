@@ -1,12 +1,15 @@
 {
   "name": "ganzomoreno",
-  "owner": { "name": "Alessandro Zanin", "url": "https://github.com/ganzomoreno" },
+  "owner": {
+    "name": "Alessandro Zanin",
+    "url": "https://github.com/ganzomoreno"
+  },
   "plugins": [
     {
       "name": "software-house",
       "source": "./plugins/software-house",
-      "description": "Software house portatile: cinque ruoli specializzati (ux-designer, analista-funzionale, developer, test-farm, code-reviewer) orchestrati da Silvana, con pipeline e cancelli. Il mestiere, non il progetto.",
-      "version": "0.1.0"
+      "description": "Software house portatile: cinque ruoli specializzati (ux-designer, analista-funzionale, developer, test-farm, code-reviewer) con dodici discipline di mestiere, orchestrati da Silvana. Pipeline a livelli e cancelli bloccanti. Il mestiere, non il progetto.",
+      "version": "0.6.0"
     }
   ]
 }

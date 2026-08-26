@@ -2,13 +2,15 @@
 
 > **A cosa serve:** portare su qualunque progetto lo stesso metodo di sviluppo — cinque ruoli, una pipeline, dei cancelli obbligatori — aggiornabile da un punto solo.
 > **Per chi:** chi apre una sessione di sviluppo, su un progetto qualsiasi.
-> Ultimo aggiornamento: 2026-08-06
+> Ultimo aggiornamento: 2026-08-26
 
 Una squadra di sviluppo che **si porta con sé**: cinque ruoli specializzati, una pipeline e dei cancelli obbligatori, disponibili su **qualunque progetto**, aggiornabili da un punto solo.
 
 Non è una raccolta di suggerimenti: è un **metodo di lavoro**, quello che su Karica è stato costruito e corretto sul campo, ripulito da tutto ciò che era specifico di quel progetto.
 
-> 📖 **Il documento di riferimento è [`docs/METODO.md`](docs/METODO.md)**: cos'è il metodo, perché lo stiamo unificando, il piano in quattro mosse e il suo stato. Chi vuole capire prima di installare parte da lì.
+> 📖 **Il manuale completo è [`docs/MANUALE.md`](docs/MANUALE.md)**: come funziona la squadra, cosa fa ognuno, le dodici discipline con esempi, i meccanismi, l'installazione. È scritto **a cipolla**: lo Strato 0 si legge in un minuto, l'Appendice contiene ogni dettaglio.
+>
+> 📐 Il **perché** di tutto questo, e il piano, stanno in [`docs/METODO.md`](docs/METODO.md).
 
 ---
 
@@ -42,6 +44,8 @@ Chi scrive il codice non scrive i test che lo promuovono, e non firma la propria
 
 Li orchestra **Silvana**, il coordinatore — la sessione principale. Silvana decide, ma non sostituisce gli specialisti sulle modifiche sostanziali.
 
+> 👥 **Per sapere chi chiamare e con quali parole**, ogni ruolo è descritto in [`docs/MANUALE.md` § Strato 3](docs/MANUALE.md): cosa fa, quando si chiama, cosa restituisce, quali discipline ha in dotazione.
+
 ---
 
 ## Come si installa
@@ -66,6 +70,8 @@ E su ogni progetto in cui lo si vuole:
 
 Da quel momento i cinque agenti sono disponibili in quel progetto, insieme alla checklist di processo che compare a ogni avvio di sessione.
 
+> 🚀 **Istruzioni pronte da incollare** per accendere la squadra su un progetto e adattarla al suo contesto: [`docs/AVVIO-SU-UN-PROGETTO.md`](docs/AVVIO-SU-UN-PROGETTO.md).
+
 ### Perché arrivi anche in cloud e su altre macchine
 
 I comandi qui sopra scrivono la configurazione **sulla macchina**. Un ambiente cloud parte pulito e non la trova.
@@ -89,9 +95,25 @@ Da lì vale per ogni sessione su quel progetto: locale, cloud, qualunque macchin
 
 ```
 plugins/software-house/
-├── agents/          i cinque ruoli
-├── skills/pipeline/ il flusso: tier, cancelli, autonomia di Silvana
-└── hooks/           checklist all'avvio + promemoria del cancello sul commit
+├── agents/                            i cinque ruoli
+├── skills/pipeline/                   il flusso: tier, cancelli, autonomia di Silvana
+│
+│   ── nove discipline di ruolo ──
+├── skills/interfacce-usabili/         ux · i cinque stati, il pavimento di accessibilità, i moduli
+├── skills/parole-nell-interfaccia/    ux · etichette, errori, stati vuoti, bottoni che dicono cosa fanno
+├── skills/criteri-di-accettazione/    analista · la forma SE/ALLORA, le parole vietate, i criteri negativi
+├── skills/modello-dei-dati/           analista · entità, cardinalità, cancellazione, dati copiati
+├── skills/macchine-a-stati/           analista · la griglia delle transizioni, incluse quelle vietate
+├── skills/regole-di-business/         analista · tabelle di decisione, completezza, precedenza
+├── skills/codice-verificabile/        developer · separare la logica dal mondo, i numeri con la baseline
+├── skills/casi-di-prova/              test-farm · classi, bordi, la famiglia del nulla, le transizioni vietate
+├── skills/revisione-onesta/           code-reviewer · cosa merita un rosso, le trappole da entrambi i lati
+│
+│   ── tre trasversali, per chi tocca il codice ──
+├── skills/verifica-per-mutazione/     come si prova che un test intercetta davvero il difetto
+├── skills/migrazioni-database/        migrazioni senza perdere un presidio: numerazione, forward-only, guard test
+├── skills/sicurezza-database/         le trappole ricorrenti delle policy e delle funzioni privilegiate
+└── hooks/                             checklist all'avvio + promemoria del cancello sul commit
 ```
 
 Per il flusso completo — quando serve l'UX, quali cancelli sono obbligatori, quanto decide Silvana da sola — vedi [`skills/pipeline/SKILL.md`](plugins/software-house/skills/pipeline/SKILL.md).
