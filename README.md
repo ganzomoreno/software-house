@@ -8,7 +8,9 @@ Una squadra di sviluppo che **si porta con sé**: cinque ruoli specializzati, un
 
 Non è una raccolta di suggerimenti: è un **metodo di lavoro**, quello che su Karica è stato costruito e corretto sul campo, ripulito da tutto ciò che era specifico di quel progetto.
 
-> 📖 **Il documento di riferimento è [`docs/METODO.md`](docs/METODO.md)**: cos'è il metodo, perché lo stiamo unificando, il piano in quattro mosse e il suo stato. Chi vuole capire prima di installare parte da lì.
+> 📖 **Il manuale completo è [`docs/MANUALE.md`](docs/MANUALE.md)**: come funziona la squadra, cosa fa ognuno, le dodici discipline con esempi, i meccanismi, l'installazione. È scritto **a cipolla**: lo Strato 0 si legge in un minuto, l'Appendice contiene ogni dettaglio.
+>
+> 📐 Il **perché** di tutto questo, e il piano, stanno in [`docs/METODO.md`](docs/METODO.md).
 
 ---
 
@@ -42,7 +44,7 @@ Chi scrive il codice non scrive i test che lo promuovono, e non firma la propria
 
 Li orchestra **Silvana**, il coordinatore — la sessione principale. Silvana decide, ma non sostituisce gli specialisti sulle modifiche sostanziali.
 
-> 👥 **Per sapere chi chiamare e con quali parole**, la descrizione funzionale di ognuno sta in [`docs/LA-SQUADRA.md`](docs/LA-SQUADRA.md): cosa fa, quando si chiama, cosa restituisce, quali discipline ha in dotazione.
+> 👥 **Per sapere chi chiamare e con quali parole**, ogni ruolo è descritto in [`docs/MANUALE.md` § Strato 3](docs/MANUALE.md): cosa fa, quando si chiama, cosa restituisce, quali discipline ha in dotazione.
 
 ---
 
@@ -94,9 +96,13 @@ plugins/software-house/
 ├── agents/                            i cinque ruoli
 ├── skills/pipeline/                   il flusso: tier, cancelli, autonomia di Silvana
 │
-│   ── una disciplina per ruolo, sempre attiva dentro il suo mestiere ──
-├── skills/interfacce-usabili/         ux-designer · i cinque stati, il pavimento di accessibilità, i moduli
+│   ── nove discipline di ruolo ──
+├── skills/interfacce-usabili/         ux · i cinque stati, il pavimento di accessibilità, i moduli
+├── skills/parole-nell-interfaccia/    ux · etichette, errori, stati vuoti, bottoni che dicono cosa fanno
 ├── skills/criteri-di-accettazione/    analista · la forma SE/ALLORA, le parole vietate, i criteri negativi
+├── skills/modello-dei-dati/           analista · entità, cardinalità, cancellazione, dati copiati
+├── skills/macchine-a-stati/           analista · la griglia delle transizioni, incluse quelle vietate
+├── skills/regole-di-business/         analista · tabelle di decisione, completezza, precedenza
 ├── skills/codice-verificabile/        developer · separare la logica dal mondo, i numeri con la baseline
 ├── skills/casi-di-prova/              test-farm · classi, bordi, la famiglia del nulla, le transizioni vietate
 ├── skills/revisione-onesta/           code-reviewer · cosa merita un rosso, le trappole da entrambi i lati

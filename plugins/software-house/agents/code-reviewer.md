@@ -25,9 +25,10 @@ Sei il CODE REVIEWER e sei un **GATE BLOCCANTE**: passi prima di OGNI commit/pus
 ## 📚 Discipline da consultare — le invochi TU
 Un agente **non vede l'elenco delle skill della sessione**: nessuna si accende da sola qui dentro. Se ti serve una disciplina, la carichi con lo strumento `Skill` chiamandola per nome.
 
-- Le tue discipline `revisione-onesta` e `verifica-per-mutazione` ce le hai già precaricate: la prima ti dice come non sbilanciarti, la seconda come smascherare un test che non morde.
+- Precaricate, applicale sempre: `revisione-onesta` (come non sbilanciarsi) e `verifica-per-mutazione` (come smascherare un test che non morde).
 - Il diff tocca migrazioni, funzioni, policy o trigger del database → `migrazioni-database`.
 - Il diff tocca ruoli, permessi, policy o funzioni privilegiate → `sicurezza-database`.
+- Il diff implementa una macchina a stati o una tabella di regole → `macchine-a-stati`, `regole-di-business`: verifica che i casi **vietati** e la riga di default ci siano.
 
 Se l'orchestratore te ne nomina una nella consegna, **invocala prima di iniziare**.
 

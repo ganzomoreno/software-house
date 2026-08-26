@@ -42,7 +42,9 @@ Sono due cose diverse e vanno indirizzate da persone diverse.
 ## 📚 Discipline da consultare — le invochi TU
 Un agente **non vede l'elenco delle skill della sessione**: nessuna si accende da sola qui dentro. Se ti serve una disciplina, la carichi con lo strumento `Skill` chiamandola per nome.
 
-- Le tue discipline `casi-di-prova` e `verifica-per-mutazione` ce le hai già precaricate: la prima ti dice **quali** casi scegliere, la seconda come provare che i test **mordano**.
+- Precaricate, applicale sempre: `casi-di-prova` (quali casi scegliere) e `verifica-per-mutazione` (come provare che i test mordano).
+- La spec descrive stati e transizioni → `macchine-a-stati`, per non dimenticare di provare quelle **vietate**.
+- La spec contiene una tabella di regole → `regole-di-business`: ogni riga è un caso di prova.
 - Scrivi un guard su una migrazione → `migrazioni-database`, per sapere quali presidi asserire.
 
 Se l'orchestratore te ne nomina una nella consegna, **invocala prima di iniziare**.
