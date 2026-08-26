@@ -3,7 +3,7 @@
 > **Cos'è questo documento.** Il manuale tecnico-funzionale completo: come funziona la squadra, cosa fa ognuno, quali discipline possiede, come si installa, come si estende.
 > **Com'è fatto.** A cipolla: ogni strato è più profondo del precedente. Fermati quando ti basta. Lo **Strato 0** si legge in un minuto; l'**Appendice** contiene ogni dettaglio.
 > **Per chi.** Il Business che vuole capire e spiegare · chi apre una sessione e deve lavorare · chi vuole estendere il metodo.
-> Ultimo aggiornamento: 2026-08-26 · plugin v0.12.0
+> Ultimo aggiornamento: 2026-08-26 · plugin v0.13.0
 
 **Documenti collegati:** il *perché* di tutto questo, e il piano, stanno in [`METODO.md`](METODO.md). Il modello da compilare su ogni progetto è [`../templates/CONTESTO-PROGETTO.md`](../templates/CONTESTO-PROGETTO.md).
 
@@ -231,11 +231,11 @@ Ognuno ha: un **mestiere**, dei **confini** (cosa non fa, ed è la parte importa
 
 ---
 
-# Strato 4 — Le dodici discipline, con esempi
+# Strato 4 — Le tredici discipline, con esempi
 
 Sono **manuali, non persone**. Ognuna nasce da un errore vero, pagato su un progetto — non immaginato.
 
-Si dividono in due famiglie: **nove di ruolo**, legate a un mestiere preciso, e **tre trasversali**, che riguardano chiunque tocchi il codice.
+Si dividono in due famiglie: **dieci di ruolo**, legate a un mestiere preciso, e **tre trasversali**, che riguardano chiunque tocchi il codice.
 
 Ogni disciplina qui sotto ha la stessa struttura: il problema che previene, cosa impone, **un esempio concreto**, e chi la possiede.
 
@@ -451,6 +451,40 @@ Ogni disciplina qui sotto ha la stessa struttura: il problema che previene, cosa
 
 ## Per il `code-reviewer`
 
+### `prove-dal-front-end`
+
+**Il problema.** Una prova unitaria dimostra che una funzione calcola bene. **Non dimostra che una persona riesca a fare quello per cui è venuta.** Fra le due cose ci sono un percorso, un ruolo, dei permessi, uno stato di partenza e un'interfaccia: è lì che vive metà dei difetti, ed è la metà che l'utente incontra per prima.
+
+**Cosa impone.**
+- **Sempre**, non «quando serve»: se un criterio descrive qualcosa che una persona vede o fa, si prova dal front end. Un criterio coperto solo da prove unitarie è **non ancora dimostrato**.
+- La **matrice criterio × ruolo**: un criterio è coperto quando funziona per ogni ruolo che lo incontra **ed è negato** per ogni ruolo che non deve incontrarlo — a video **e** lato sistema, perché sono due difetti diversi.
+- **Un'utenza di prova per ogni ruolo.** Dedicate, su ambiente non di produzione: quelle si usano. Le credenziali di persone reali, mai.
+- Niente scorciatoie: si arriva dal percorso vero, lo stato di partenza si crea **attraverso il sistema**, si guarda **cosa compare a video**.
+- Un resoconto con i **numeri** e una sezione per ciò che **non** è dimostrato.
+
+**Esempio — il resoconto**
+
+> ❌ *«Testato dal front end, tutto ok.»*
+> Non dice per quale ruolo, non dice cosa non è stato provato, non ha evidenze. Chi legge deve fidarsi.
+>
+> ✅
+> ```
+> CRITERIO  RUOLO      ATTESO                ESITO  EVIDENZA
+> AC4       operatore  azione riuscita       ✅     schermata 3
+> AC4       cliente    rifiutata a video     ✅     schermata 4
+> AC4       cliente    rifiutata dal server  ✅     risposta 403
+>
+> Totale: 5 su 6 dimostrati.
+> NON DIMOSTRATO
+> - AC5 · nessuna utenza ha una casella di posta raggiungibile. Lacuna segnalata.
+> ```
+>
+> **Una riga per criterio E per ruolo.** Un criterio provato con un ruolo solo è coperto per un terzo, e la tabella lo deve mostrare.
+
+> ⚠️ **Le caselle in cui l'azione deve essere negata sono metà del lavoro**, e sono quelle che nessuno prova. Un permesso che funziona è un permesso che *nega*: se non hai provato che il ruolo sbagliato viene fermato, hai provato solo che quello giusto passa. E nascondere un pulsante non è un controllo: chi chiama il sistema direttamente il pulsante non lo vede nemmeno.
+
+---
+
 ### `revisione-onesta`
 
 **Il problema.** Una revisione può fallire in **due direzioni, e costano uguale**. Approvare un difetto manda in produzione un guasto. Bloccare su un gusto ferma il lavoro e **brucia la fiducia nel cancello**, così la volta dopo nessuno lo prende sul serio.
@@ -587,7 +621,7 @@ E Silvana può farlo al posto suo: lei vede cosa tocca il lavoro, e nomina la di
 | `ux-designer` | interfacce-usabili · parole-nell-interfaccia | — |
 | `analista-funzionale` | criteri-di-accettazione | modello-dei-dati · macchine-a-stati · regole-di-business · migrazioni-database · sicurezza-database |
 | `developer` | codice-verificabile | migrazioni-database · sicurezza-database |
-| `test-farm` | casi-di-prova · verifica-per-mutazione | macchine-a-stati · regole-di-business · migrazioni-database |
+| `test-farm` | prove-dal-front-end · casi-di-prova · verifica-per-mutazione | macchine-a-stati · regole-di-business · migrazioni-database |
 | `code-reviewer` | revisione-onesta · verifica-per-mutazione | migrazioni-database · sicurezza-database · macchine-a-stati · regole-di-business |
 
 **Il criterio:** si precarica solo ciò che serve a **ogni** invocazione di quel mestiere. Tutto il resto è di livello 2, con la condizione scritta nel prompt.

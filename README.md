@@ -8,7 +8,7 @@ Una squadra di sviluppo che **si porta con sé**: cinque ruoli specializzati, un
 
 Non è una raccolta di suggerimenti: è un **metodo di lavoro**, quello che su Karica è stato costruito e corretto sul campo, ripulito da tutto ciò che era specifico di quel progetto.
 
-> 📖 **Il manuale completo è [`docs/MANUALE.md`](docs/MANUALE.md)**: come funziona la squadra, cosa fa ognuno, le dodici discipline con esempi, i meccanismi, l'installazione. È scritto **a cipolla**: lo Strato 0 si legge in un minuto, l'Appendice contiene ogni dettaglio.
+> 📖 **Il manuale completo è [`docs/MANUALE.md`](docs/MANUALE.md)**: come funziona la squadra, cosa fa ognuno, le tredici discipline con esempi, i meccanismi, l'installazione. È scritto **a cipolla**: lo Strato 0 si legge in un minuto, l'Appendice contiene ogni dettaglio.
 >
 > 📐 Il **perché** di tutto questo, e il piano, stanno in [`docs/METODO.md`](docs/METODO.md).
 
@@ -39,7 +39,7 @@ Chi scrive il codice non scrive i test che lo promuovono, e non firma la propria
 | **`ux-designer`** | Guarda la schermata con gli occhi di chi la usa e propone il ridisegno | Non scrive codice |
 | **`analista-funzionale`** | Trasforma la richiesta in criteri di accettazione **binari** e numerati | Non implementa |
 | **`developer`** | Implementa **esattamente** quei criteri, e li verifica | Non scrive i propri test, non fa commit |
-| **`test-farm`** | Scrive i test partendo **dai criteri, non dal codice** | Non tocca il codice di produzione |
+| **`test-farm`** | Scrive i test **dai criteri**, e prova **sempre dal front end** ogni ruolo | Non tocca il codice di produzione |
 | **`code-reviewer`** | **Cancello bloccante** prima di ogni commit | Non applica i fix: emette un verdetto |
 
 Li orchestra **Silvana**, il coordinatore — la sessione principale. Silvana decide, ma non sostituisce gli specialisti sulle modifiche sostanziali.
@@ -50,21 +50,26 @@ Li orchestra **Silvana**, il coordinatore — la sessione principale. Silvana de
 
 ## Come si installa
 
-Dalla cartella principale del progetto:
+**Due modi, e la scelta dipende da una domanda sola: da dove aprirai le sessioni?**
+
+**Se lavori dal tuo computer** — puntamento, la forma più pulita: un sottomodulo più dei collegamenti, e nella storia del progetto entrano meno di 2 KB invece dei file.
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/ganzomoreno/software-house/main/scripts/collega.sh | bash
+bash .software-house/scripts/collega.sh --aggiorna   # per aggiornare: sposta il puntatore
 ```
 
-Aggancia la software house come **sottomodulo** e crea dei **collegamenti** in `.claude/`. Nella storia del progetto entrano un puntatore e dei collegamenti — meno di 2 KB — **non i file**. Aggiornare significa spostare il puntatore:
+Richiede due condizioni: il sottomodulo va recuperato (`--recurse-submodules`), e su Windows serve la **Modalità sviluppo** accesa più `git config --global core.symlinks true`, **prima** del clone.
+
+**Se lavori anche dal web, o non lo sai ancora** — copia, che non chiede niente a nessuno:
 
 ```bash
-bash .software-house/scripts/collega.sh --aggiorna
+curl -fsSL https://raw.githubusercontent.com/ganzomoreno/software-house/main/scripts/installa.sh | bash
 ```
 
-Poi commit, e **una sessione nuova**.
+In entrambi i casi: commit, e **una sessione nuova**.
 
-> Se l'ambiente non regge collegamenti o sottomoduli, c'è il ripiego che funziona sempre: `scripts/installa.sh` copia i file dentro il progetto. Confronto fra i due in [`docs/MANUALE.md` § 6.2](docs/MANUALE.md).
+> ⚠️ **In Claude Code su web i puntamenti non funzionano**: l'ambiente clona senza sottomoduli e i collegamenti restano appesi nel vuoto. Un progetto che sceglie i puntamenti condanna le proprie sessioni web a trovare la squadra assente. Confronto completo in [`docs/MANUALE.md` § 6.2](docs/MANUALE.md).
 
 > 🚀 **Istruzioni complete**, con l'adattamento al contesto del progetto: [`docs/AVVIO-SU-UN-PROGETTO.md`](docs/AVVIO-SU-UN-PROGETTO.md).
 
@@ -83,7 +88,7 @@ plugins/software-house/
 ├── agents/                            i cinque ruoli
 ├── skills/pipeline/                   il flusso: tier, cancelli, autonomia di Silvana
 │
-│   ── nove discipline di ruolo ──
+│   ── dieci discipline di ruolo ──
 ├── skills/interfacce-usabili/         ux · i cinque stati, il pavimento di accessibilità, i moduli
 ├── skills/parole-nell-interfaccia/    ux · etichette, errori, stati vuoti, bottoni che dicono cosa fanno
 ├── skills/criteri-di-accettazione/    analista · la forma SE/ALLORA, le parole vietate, i criteri negativi
@@ -91,6 +96,7 @@ plugins/software-house/
 ├── skills/macchine-a-stati/           analista · la griglia delle transizioni, incluse quelle vietate
 ├── skills/regole-di-business/         analista · tabelle di decisione, completezza, precedenza
 ├── skills/codice-verificabile/        developer · separare la logica dal mondo, i numeri con la baseline
+├── skills/prove-dal-front-end/        test-farm · sempre dal front end, un'utenza per ruolo, la matrice degli esiti
 ├── skills/casi-di-prova/              test-farm · classi, bordi, la famiglia del nulla, le transizioni vietate
 ├── skills/revisione-onesta/           code-reviewer · cosa merita un rosso, le trappole da entrambi i lati
 │
