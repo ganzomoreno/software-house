@@ -26,8 +26,21 @@ Regole di propagazione fra rami, e le operazioni **vietate** (con il motivo: un 
 - Task list (il metodo di lavoro condiviso col Business).
 - Specifiche funzionali.
 
-## Utenze di prova
-Quali esistono, per quale ruolo, e **come si accede** (le credenziali le digita l'utente, non l'assistente).
+## Utenze di prova — una per ruolo
+
+Senza un'utenza per **ogni** ruolo, la matrice delle prove dal front end non si può riempire e la copertura resta un'opinione. Compila questa tabella per intero: una riga per ruolo, comprese le utenze che servono solo a verificare che qualcuno **non** possa fare qualcosa.
+
+| Ruolo | Utenza | Dove sta la password | Cosa serve a dimostrare |
+|---|---|---|---|
+| | | | |
+| | | | |
+| anonimo (non autenticato) | — | — | che ciò che è riservato resti irraggiungibile |
+
+- **Dove sta la password**: nella configurazione dell'ambiente, mai nel codice versionato. Scrivi *dove si trova*, non il valore.
+- Se serve una **casella di posta** raggiungibile per verificare le notifiche, indicala qui: senza, i criteri sulle email non sono dimostrabili.
+- **Utenze di prova dedicate** su ambiente non di produzione: le usa chi prova.
+  **Credenziali di persone reali**: mai, quelle le digita l'utente in prima persona.
+- Se un ruolo non ha ancora un'utenza, **scrivilo qui come lacuna aperta** invece di lasciare la riga vuota: è ciò che resterà non dimostrato a ogni consegna.
 
 ## Incidenti da non ripetere
 Uno per riga: cosa è successo, quale regola ne è nata. Sono la parte più preziosa e la più facile da perdere.
