@@ -188,6 +188,7 @@ Alla fine, oltre al lavoro, dimmi due cose:
 | Sintomo | Causa quasi certa | Rimedio |
 |---|---|---|
 | Nessun agente, nessuna disciplina — ma altri plugin risultano caricati | la squadra non è mai stata copiata nel progetto, oppure la copia non è sul ramo da cui è partita la sessione | esegui lo script della Fase 1 e verifica su quale ramo è finita la cartella `.claude/` |
+| Lo script dice che ha installato, il commit è riuscito, e la squadra non arriva | **il `.gitignore` del progetto esclude `.claude/`**: il commit è passato senza portare nulla | gli script dalla v0.9.0 lo rilevano e aggiungono le eccezioni da soli; se hai una versione più vecchia, controlla con `git check-ignore .claude/skills/pipeline` |
 | Nessun agente, e nel `settings.json` c'è la dichiarazione del marketplace | è la trappola: quella dichiarazione **non installa il plugin** ([issue #32606](https://github.com/anthropics/claude-code/issues/32606)) | usa lo script di copia diretta, non il marketplace |
 | Gli agenti ci sono, le discipline no | i collegamenti per gli agenti reggono, per le discipline no (o viceversa) | passa al modo copiato: `scripts/installa.sh` |
 | `.software-house/` è vuota e non carica niente | l'ambiente ha clonato il progetto **senza i sottomoduli** | prova `git submodule update --init`; se non regge a ogni sessione, passa al modo copiato |

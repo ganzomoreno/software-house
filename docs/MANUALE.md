@@ -3,7 +3,7 @@
 > **Cos'è questo documento.** Il manuale tecnico-funzionale completo: come funziona la squadra, cosa fa ognuno, quali discipline possiede, come si installa, come si estende.
 > **Com'è fatto.** A cipolla: ogni strato è più profondo del precedente. Fermati quando ti basta. Lo **Strato 0** si legge in un minuto; l'**Appendice** contiene ogni dettaglio.
 > **Per chi.** Il Business che vuole capire e spiegare · chi apre una sessione e deve lavorare · chi vuole estendere il metodo.
-> Ultimo aggiornamento: 2026-08-26 · plugin v0.8.0
+> Ultimo aggiornamento: 2026-08-26 · plugin v0.9.0
 
 **Documenti collegati:** il *perché* di tutto questo, e il piano, stanno in [`METODO.md`](METODO.md). Il modello da compilare su ogni progetto è [`../templates/CONTESTO-PROGETTO.md`](../templates/CONTESTO-PROGETTO.md).
 
@@ -670,6 +670,20 @@ Copia agenti e discipline dentro `.claude/` del progetto. **Non dipende da nient
 Costo: duemila righe duplicate nella storia del progetto, e il rischio che qualcuno modifichi la copia invece dell'originale. Lo script scrive un'intestazione di avvertimento nel registro `.claude/.software-house` proprio per quello.
 
 Anche questo è **rieseguibile** e rimuove la copia precedente prima di riscrivere.
+
+### ⚠️ La trappola del `.gitignore`
+
+Molti progetti hanno nel `.gitignore` una riga come `.claude/*` con la sola eccezione `!.claude/settings.json` — nasce per non versionare le impostazioni personali, ed è ragionevole.
+
+**Con quella riga, agenti e discipline sono invisibili a git.** `git add .claude/` aggiunge zero file e **il commit riesce senza portare niente**: nessun errore, nessun avviso. Ci si accorge del problema solo alla sessione dopo, quando la squadra non c'è — e il sintomo è identico a quello del marketplace rotto.
+
+Entrambi gli script, dalla **v0.9.0**, lo rilevano e aggiungono da soli le eccezioni necessarie, dicendo cosa hanno fatto. Per controllare a mano:
+
+```bash
+git check-ignore .claude/skills/pipeline   # se stampa qualcosa, sei nella trappola
+```
+
+> Scoperto sul campo il 26/08/2026, alla prima installazione su un progetto vero. È il tipo di difetto peggiore: **fallisce in silenzio e riesce ad apparire riuscito.**
 
 ### Quale scegliere
 
