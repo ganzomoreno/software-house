@@ -61,11 +61,16 @@ Aggiungi al CLAUDE.md questa sezione, esattamente com'è:
 
 ## Discipline della software house NON in uso su questo progetto
 
-- `sicurezza-database` — se ne occupano: i dos amigos (sviluppatori esterni) —
-  deciso da Ale, il 26/08/2026
+- `sicurezza-database` — deciso da Ale, il 26/08/2026
+  Motivo: questo è un ambiente prototipo. Gli sviluppatori esterni riscrivono sopra
+  con le loro tecniche prima della produzione, quindi il lavoro di sicurezza fatto
+  qui verrebbe buttato via. Farlo "decente" costerebbe senza lasciare nulla: meglio
+  farlo dichiaratamente finto.
+  Se ne occupano: gli sviluppatori esterni, sulla loro riscrittura.
   Cosa smette di essere controllato: il code-reviewer non solleverà più rilievi su
-  permessi, ruoli, policy e funzioni privilegiate. Quei temi li verificano loro, in
-  revisione della richiesta di merge.
+  permessi, ruoli, policy e funzioni privilegiate.
+  ⚠️ Vale finché l'ambiente resta un prototipo destinato a essere riscritto. Se un
+  giorno venisse promosso così com'è, questa esclusione cade.
 
 > L'esclusione vale per la disciplina nominata, non per il tema. Restano attivi i
 > criteri negativi dell'analista (chi non deve potere) e le prove sulle transizioni
