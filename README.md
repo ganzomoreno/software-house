@@ -2,7 +2,7 @@
 
 > **A cosa serve:** portare su qualunque progetto lo stesso metodo di sviluppo — cinque ruoli, una pipeline, dei cancelli obbligatori — aggiornabile da un punto solo.
 > **Per chi:** chi apre una sessione di sviluppo, su un progetto qualsiasi.
-> Ultimo aggiornamento: 2026-08-25
+> Ultimo aggiornamento: 2026-08-26
 
 Una squadra di sviluppo che **si porta con sé**: cinque ruoli specializzati, una pipeline e dei cancelli obbligatori, disponibili su **qualunque progetto**, aggiornabili da un punto solo.
 
@@ -41,6 +41,8 @@ Chi scrive il codice non scrive i test che lo promuovono, e non firma la propria
 | **`code-reviewer`** | **Cancello bloccante** prima di ogni commit | Non applica i fix: emette un verdetto |
 
 Li orchestra **Silvana**, il coordinatore — la sessione principale. Silvana decide, ma non sostituisce gli specialisti sulle modifiche sostanziali.
+
+> 👥 **Per sapere chi chiamare e con quali parole**, la descrizione funzionale di ognuno sta in [`docs/LA-SQUADRA.md`](docs/LA-SQUADRA.md): cosa fa, quando si chiama, cosa restituisce, quali discipline ha in dotazione.
 
 ---
 
