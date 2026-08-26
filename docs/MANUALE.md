@@ -3,7 +3,7 @@
 > **Cos'è questo documento.** Il manuale tecnico-funzionale completo: come funziona la squadra, cosa fa ognuno, quali discipline possiede, come si installa, come si estende.
 > **Com'è fatto.** A cipolla: ogni strato è più profondo del precedente. Fermati quando ti basta. Lo **Strato 0** si legge in un minuto; l'**Appendice** contiene ogni dettaglio.
 > **Per chi.** Il Business che vuole capire e spiegare · chi apre una sessione e deve lavorare · chi vuole estendere il metodo.
-> Ultimo aggiornamento: 2026-08-26 · plugin v0.6.0
+> Ultimo aggiornamento: 2026-08-26 · plugin v0.7.0
 
 **Documenti collegati:** il *perché* di tutto questo, e il piano, stanno in [`METODO.md`](METODO.md). Il modello da compilare su ogni progetto è [`../templates/CONTESTO-PROGETTO.md`](../templates/CONTESTO-PROGETTO.md).
 
@@ -632,28 +632,25 @@ La confusione più frequente è fra la cartella in cui si lavora e il posto da c
 
 > **La cartella in cui sei seduto non è la cartella da cui arriva il metodo.** Il plugin viene scaricato da GitHub; il progetto resta dov'è.
 
-## 6.2 Come si installa
+## 6.2 Come si installa — la copia diretta
 
-> 🚀 **Per accendere la squadra su un progetto** ci sono le istruzioni pronte da incollare in [`AVVIO-SU-UN-PROGETTO.md`](AVVIO-SU-UN-PROGETTO.md): tre fasi, con i blocchi da copiare e la tabella dei guasti tipici.
-
-
-Una volta per macchina, dentro Claude Code:
-
-```
-/plugin marketplace add ganzomoreno/software-house
+```bash
+curl -fsSL https://raw.githubusercontent.com/ganzomoreno/software-house/main/scripts/installa.sh | bash
 ```
 
-E su ogni progetto in cui lo si vuole:
+Da eseguire **nella cartella principale del progetto**. Copia i cinque agenti e le discipline dentro `.claude/agents/` e `.claude/skills/` del progetto. Poi si fa commit e si porta sul ramo da cui partono le sessioni.
 
-```
-/plugin install software-house@ganzomoreno
-```
+**Perché così, e non con il marketplace.** Perché gli agenti e le discipline diventano **file del progetto**, e i file del progetto si caricano sempre: in locale, in cloud, per chiunque apra il repository, senza installazioni, senza permessi da concedere, senza dipendere da un servizio esterno raggiungibile.
 
-## 6.3 ⚠️ Perché la configurazione va nel progetto, e non sulla macchina
+Lo script è **rieseguibile**: tiene un elenco di ciò che ha installato (`.claude/.software-house`), lo rimuove prima di riscrivere, e non tocca gli agenti e le discipline propri del progetto.
 
-I comandi qui sopra scrivono la configurazione **sulla macchina**. Un ambiente cloud parte pulito e non la trova: la sessione non avrebbe né gli agenti né le discipline.
+**Per aggiornare** a una versione nuova della software house: si riesegue lo stesso comando, si fa commit, e la sessione successiva ha la versione nuova.
 
-Per averla ovunque, si mette nel file di configurazione **del progetto** — `.claude/settings.json`, che è versionato e quindi viaggia col repository:
+> ⚠️ **Non modificare quei file dentro il progetto.** Sono una copia: la riesecuzione dello script li sovrascrive. Le correzioni si fanno nel repository della software house — è il senso di avere un punto solo.
+
+## 6.3 🔴 Perché NON usiamo il marketplace (e la trappola in cui siamo caduti)
+
+Claude Code prevede un meccanismo apposta per distribuire un plugin a un team: si dichiara il marketplace nel `.claude/settings.json` del progetto, versionato, e chiunque apra quel progetto se lo ritrova.
 
 ```json
 {
@@ -664,14 +661,22 @@ Per averla ovunque, si mette nel file di configurazione **del progetto** — `.c
 }
 ```
 
-Da lì vale per ogni sessione su quel progetto: locale, cloud, qualunque macchina, chiunque nel team.
+**Questa dichiarazione non installa il plugin.** È documentato che dovrebbe farlo, e non lo fa: il marketplace viene registrato, la cache viene popolata, ma l'elenco dei plugin installati non viene mai aggiornato e agenti e discipline restano irraggiungibili.
 
-**È il motivo per cui questo repository è pubblico**: se fosse privato, le sessioni di chi non vi ha accesso fallirebbero il download.
+- È un **difetto noto** di Claude Code: [issue #32606](https://github.com/anthropics/claude-code/issues/32606), chiusa senza intervento.
+- C'è anche un secondo ostacolo, questo documentato: `extraKnownMarketplaces` **richiede che la cartella sia stata dichiarata affidabile** da chi apre la sessione. Finché non lo è, «non ricevono i plugin dal marketplace che il file dichiara». In un ambiente cloud quel passaggio spesso non avviene.
+
+**Il sintomo, per riconoscerlo:** la sessione parte, il `CLAUDE.md` del progetto viene letto regolarmente, altri plugin risultano caricati — ma dei cinque agenti non c'è traccia e nessuna disciplina compare nell'elenco. Sembra un problema di configurazione del progetto, e non lo è.
+
+> **Ci siamo cascati il 26/08/2026**, alla prima prova su un progetto vero: la dichiarazione era scritta correttamente e versionata, e la squadra non è arrivata lo stesso. Da lì nasce lo script di copia diretta.
+
+**La dichiarazione nel `settings.json` si può lasciare** — non fa danno, e il giorno in cui il difetto verrà risolto funzionerà. Ma non è su quella che si conta.
 
 ## 6.4 🔴 Due cose da sapere prima di aprire una sessione
 
-1. **Il plugin viene servito dal ramo principale (`main`) del repository.** Il lavoro fatto su un ramo di sviluppo **non arriva ai progetti** finché non è unito a `main`. Se hai appena aggiunto una disciplina e non la vedi, è quasi sempre questo.
-2. **Le discipline e gli agenti si caricano all'avvio della sessione.** Una sessione già aperta **non le vede comparire**: dopo un aggiornamento del plugin serve una **sessione nuova**.
+1. **Lo script copia dal ramo principale (`main`) della software house.** Una disciplina aggiunta su un ramo di sviluppo **non arriva ai progetti** finché non è unita a `main`.
+2. **Gli agenti e le discipline si caricano all'avvio della sessione.** Una sessione già aperta **non li vede comparire**: dopo un aggiornamento serve una **sessione nuova**.
+3. **La copia va portata sul ramo da cui partono le tue sessioni**, e non è per forza `main` del progetto: su progetti con più ambienti si lavora su un ramo dedicato.
 
 ---
 
@@ -790,6 +795,7 @@ Non le scriviamo prima di averne bisogno: la regola è che una disciplina nasce 
 ```
 software-house/
 ├── README.md                          vetrina e installazione
+├── scripts/installa.sh                copia agenti e discipline in un progetto
 ├── .claude-plugin/marketplace.json    definizione del marketplace  ← la versione qui
 ├── docs/
 │   ├── MANUALE.md                     questo documento — come funziona, tutto

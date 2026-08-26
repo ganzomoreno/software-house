@@ -50,44 +50,23 @@ Li orchestra **Silvana**, il coordinatore — la sessione principale. Silvana de
 
 ## Come si installa
 
-Una volta per macchina:
+Dalla cartella principale del progetto:
 
 ```bash
-claude
+curl -fsSL https://raw.githubusercontent.com/ganzomoreno/software-house/main/scripts/installa.sh | bash
 ```
 
-Poi, dentro Claude Code:
+Copia i cinque agenti e le dodici discipline in `.claude/` del progetto. Poi commit, e **una sessione nuova**.
 
-```
-/plugin marketplace add ganzomoreno/software-house
-```
+Diventano **file del progetto**: si caricano sempre — in locale, in cloud, per chiunque apra il repository — senza installazioni e senza dipendere da un servizio esterno. Per aggiornare, si riesegue lo stesso comando.
 
-E su ogni progetto in cui lo si vuole:
+> 🚀 **Istruzioni complete**, con le fasi di adattamento al contesto del progetto: [`docs/AVVIO-SU-UN-PROGETTO.md`](docs/AVVIO-SU-UN-PROGETTO.md).
 
-```
-/plugin install software-house@ganzomoreno
-```
+### Perché non dal marketplace
 
-Da quel momento i cinque agenti sono disponibili in quel progetto, insieme alla checklist di processo che compare a ogni avvio di sessione.
+Claude Code prevede la dichiarazione del marketplace nel `settings.json` del progetto. **Non installa davvero il plugin**: difetto noto ([issue #32606](https://github.com/anthropics/claude-code/issues/32606), chiusa senza intervento), più il vincolo che `extraKnownMarketplaces` richiede che la cartella sia dichiarata affidabile — passaggio che in cloud spesso non avviene.
 
-> 🚀 **Istruzioni pronte da incollare** per accendere la squadra su un progetto e adattarla al suo contesto: [`docs/AVVIO-SU-UN-PROGETTO.md`](docs/AVVIO-SU-UN-PROGETTO.md).
-
-### Perché arrivi anche in cloud e su altre macchine
-
-I comandi qui sopra scrivono la configurazione **sulla macchina**. Un ambiente cloud parte pulito e non la trova.
-
-Per averla ovunque, la si mette nel file di configurazione **del progetto** — `.claude/settings.json`, che è versionato e quindi viaggia col repository:
-
-```json
-{
-  "extraKnownMarketplaces": {
-    "ganzomoreno": { "source": { "source": "github", "repo": "ganzomoreno/software-house" } }
-  },
-  "enabledPlugins": { "software-house@ganzomoreno": true }
-}
-```
-
-Da lì vale per ogni sessione su quel progetto: locale, cloud, qualunque macchina, chiunque nel team. **È il motivo per cui questo repository è pubblico**: se fosse privato, le sessioni di chi non vi ha accesso fallirebbero il download.
+Il sintomo è ingannevole: la sessione parte, il `CLAUDE.md` viene letto, altri plugin risultano caricati, ma dei cinque agenti non c'è traccia. Dettagli in [`docs/MANUALE.md` § 6.3](docs/MANUALE.md).
 
 ---
 
