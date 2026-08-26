@@ -712,11 +712,44 @@ La forma:
 - `<nome-disciplina>` — <chi se ne occupa invece> — <dal quando, e chi ha deciso>
 ```
 
-**Tre regole perché l'esclusione non diventi un buco.**
+**Quattro regole perché l'esclusione non diventi un buco.**
 
-1. **Si scrive chi se ne occupa al posto nostro.** Un'esclusione senza destinatario non è una delega: è una competenza che non ha più nessun proprietario.
-2. **Si scrive cosa smette di essere controllato.** Escludere `sicurezza-database` significa che il `code-reviewer` non solleverà più i rilievi su permessi e policy. Va detto, perché è esattamente ciò che il cancello smette di fermare.
-3. **Ha una data e un decisore.** Un'esclusione senza data non si rivede mai, e fra un anno nessuno saprà se vale ancora.
+1. **Si scrive il motivo, e il motivo deve reggere da solo.** È la regola che viene prima delle altre, perché è quella che qualcuno rileggerà fra sei mesi chiedendosi se vale ancora.
+2. **Si scrive chi se ne occupa al posto nostro.** Un'esclusione senza destinatario non è una delega: è una competenza che non ha più nessun proprietario.
+3. **Si scrive cosa smette di essere controllato.** Escludere `sicurezza-database` significa che il `code-reviewer` non solleverà più i rilievi su permessi e policy. Va detto, perché è esattamente ciò che il cancello smette di fermare.
+4. **Ha una data e un decisore.** Un'esclusione senza data non si rivede mai.
+
+### ⭐ Quali motivi reggono, e quali no
+
+Un motivo regge quando **descrive una proprietà del progetto** che rende quel lavoro inutile o dannoso. Non regge quando descrive una condizione temporanea di chi lavora.
+
+| Motivo | Regge? | Perché |
+|---|---|---|
+| *«Questo ambiente è un prototipo: il codice verrà riscritto da altri con altre tecniche prima di andare in produzione»* | ✅ sì | il lavoro sarebbe **buttato via**. Farlo «decente» costa e non lascia nulla: tanto vale farlo dichiaratamente finto |
+| *«Quel tema è di un altro team, che lo tratta con i propri strumenti e le proprie revisioni»* | ✅ sì | il presidio esiste, **altrove**, e ha un proprietario nominato |
+| *«Su questo progetto non si applica»* (un progetto senza database esclude le discipline sul database) | ✅ sì | non c'è nulla da controllare |
+| *«Non abbiamo tempo adesso»* | ❌ no | è un rinvio, non un'esclusione. Va nel registro come debito, con una data |
+| *«Non è mai successo niente»* | ❌ no | è l'argomento che precede ogni incidente |
+| *«Rallenta»* | ❌ no | se un cancello rallenta più di quanto protegge, il problema è **come è fatto**, non che esista |
+
+> ⚠️ **Il caso del prototipo ha una condizione.** Un ambiente finto vale come motivo **solo finché resta finto**. Il giorno in cui qualcuno decide di promuoverlo invece di riscriverlo, tutte le esclusioni che poggiavano su quel motivo cadono insieme — e nessuno se ne ricorda da solo. **Va scritto nell'esclusione stessa**: *«questa esclusione vale finché l'ambiente è un prototipo destinato a essere riscritto».*
+
+**Un esempio completo, dal campo:**
+
+```markdown
+## Discipline della software house NON in uso su questo progetto
+
+- `sicurezza-database` — deciso da Ale, il 26/08/2026
+  Motivo: questo è un ambiente prototipo. Gli sviluppatori esterni riscrivono
+  sopra con le loro tecniche prima della produzione, quindi il lavoro di
+  sicurezza fatto qui verrebbe buttato via. Farlo "decente" costerebbe senza
+  lasciare nulla: meglio farlo dichiaratamente finto.
+  Se ne occupano: gli sviluppatori esterni, sulla loro riscrittura.
+  Cosa smette di essere controllato: il code-reviewer non solleverà più rilievi
+  su permessi, ruoli, policy e funzioni privilegiate.
+  ⚠️ Vale finché l'ambiente resta un prototipo destinato a essere riscritto.
+  Se un giorno venisse promosso così com'è, questa esclusione cade.
+```
 
 > ⚠️ **L'esclusione non si estende da sola.** Vale per la disciplina nominata, non per il tema. Escludere la sicurezza del database non esclude i criteri negativi dell'analista (chi non deve potere) né le prove sulle transizioni vietate: quelli restano, perché sono correttezza funzionale, non sicurezza di sistema.
 

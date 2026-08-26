@@ -37,14 +37,20 @@ Uno per riga: cosa è successo, quale regola ne è nata. Sono la parte più prez
 Il plugin porta tutto il mestiere; non tutti i progetti usano tutto. Qui si dichiara cosa **non** si applica, e chi se ne occupa al posto nostro.
 
 ```
-- `<nome-disciplina>` — se ne occupa: <chi> — deciso da <chi>, il <data>
+- `<nome-disciplina>` — deciso da <chi>, il <data>
+  Motivo: <perché su questo progetto quel lavoro è inutile o dannoso>
+  Se ne occupano: <chi, al posto nostro>
   Cosa smette di essere controllato: <cosa il code-reviewer non solleverà più>
+  ⚠️ Vale finché: <la condizione che regge il motivo>
 ```
 
-Tre regole perché l'esclusione non diventi un buco:
-1. **Chi se ne occupa al posto nostro** va nominato. Senza destinatario non è una delega: è una competenza rimasta senza proprietario.
-2. **Cosa smette di essere controllato** va scritto: è esattamente ciò che il cancello non fermerà più.
-3. **Data e decisore**, sempre. Un'esclusione senza data non si rivede mai.
+Quattro regole perché l'esclusione non diventi un buco:
+1. **Il motivo** va scritto, e deve reggere da solo fra sei mesi. Un motivo regge quando descrive una proprietà del progetto (*«è un prototipo che verrà riscritto»*, *«è di un altro team»*, *«non si applica»*), non una condizione di chi lavora (*«non abbiamo tempo»*, *«non è mai successo niente»*).
+2. **Chi se ne occupa al posto nostro** va nominato. Senza destinatario non è una delega: è una competenza rimasta senza proprietario.
+3. **Cosa smette di essere controllato** va scritto: è esattamente ciò che il cancello non fermerà più.
+4. **Data e decisore**, sempre. Un'esclusione senza data non si rivede mai.
+
+Se il motivo poggia su una condizione (un ambiente finto, una fase del progetto), **scrivi la condizione**: il giorno in cui cade, cadono con lei tutte le esclusioni che ci poggiavano, e nessuno se ne ricorda da solo.
 
 > L'esclusione vale per la **disciplina nominata**, non per il tema. Escludere la sicurezza del database non toglie i criteri negativi dell'analista né le prove sulle transizioni vietate: quelli sono correttezza funzionale, non sicurezza di sistema.
 
