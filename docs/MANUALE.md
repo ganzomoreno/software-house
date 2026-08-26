@@ -634,6 +634,9 @@ La confusione più frequente è fra la cartella in cui si lavora e il posto da c
 
 ## 6.2 Come si installa
 
+> 🚀 **Per accendere la squadra su un progetto** ci sono le istruzioni pronte da incollare in [`AVVIO-SU-UN-PROGETTO.md`](AVVIO-SU-UN-PROGETTO.md): tre fasi, con i blocchi da copiare e la tabella dei guasti tipici.
+
+
 Una volta per macchina, dentro Claude Code:
 
 ```
@@ -757,6 +760,7 @@ software-house/
 ├── .claude-plugin/marketplace.json    definizione del marketplace  ← la versione qui
 ├── docs/
 │   ├── MANUALE.md                     questo documento — come funziona, tutto
+│   ├── AVVIO-SU-UN-PROGETTO.md        istruzioni pronte da incollare, per accendere la squadra
 │   └── METODO.md                      il perché, e il piano di unificazione
 ├── templates/CONTESTO-PROGETTO.md     modello da compilare su ogni progetto
 └── plugins/software-house/

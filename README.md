@@ -70,6 +70,8 @@ E su ogni progetto in cui lo si vuole:
 
 Da quel momento i cinque agenti sono disponibili in quel progetto, insieme alla checklist di processo che compare a ogni avvio di sessione.
 
+> 🚀 **Istruzioni pronte da incollare** per accendere la squadra su un progetto e adattarla al suo contesto: [`docs/AVVIO-SU-UN-PROGETTO.md`](docs/AVVIO-SU-UN-PROGETTO.md).
+
 ### Perché arrivi anche in cloud e su altre macchine
 
 I comandi qui sopra scrivono la configurazione **sulla macchina**. Un ambiente cloud parte pulito e non la trova.
