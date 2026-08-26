@@ -165,4 +165,42 @@ Alla fine, oltre al lavoro, dimmi due cose:
 | Gli agenti ci sono, le discipline no | il plugin arriva da una versione vecchia del ramo principale | verifica che `main` di `ganzomoreno/software-house` sia almeno alla v0.6.0 |
 | C'era tutto ieri, oggi no | la sessione è stata aperta prima dell'aggiornamento | apri una sessione nuova |
 
+## Appendice — Rami e ambienti, per chi non è tecnico
+
+### Cos'è un ramo
+
+Immagina il repository come **un raccoglitore di documenti condiviso**.
+
+- Il **ramo principale** (`main`) è la copia ufficiale: quella che vale, quella che gli altri leggono.
+- Un **ramo** è una **fotocopia di lavoro**. Ci scrivi sopra senza disturbare nessuno: finché stai lì, la copia ufficiale non cambia di una virgola.
+- **Unire un ramo** (*merge*) vuol dire: *«prendi le mie modifiche e portale sulla copia ufficiale».* Da quel momento valgono per tutti.
+
+Finché un ramo non è unito, **il suo lavoro esiste ma non conta**: chi legge la copia ufficiale non lo vede.
+
+### Perché ci sono tanti rami e nessuno li ha fatti apposta
+
+Ogni sessione di lavoro ne crea uno nuovo, automaticamente, per non pestare i piedi alle altre. Quindi si accumulano: sono i resti delle sessioni passate. **Non fanno danno** — sono fotocopie ferme in un cassetto. Si possono cancellare quando il loro lavoro è stato unito, ma non è urgente.
+
+### Rami e ambienti: due cose diverse che si somigliano
+
+Un **ambiente** è un posto dove il programma **gira davvero**: produzione (i clienti veri), staging (le prove prima di pubblicare), sandbox (il campo giochi).
+
+Un **ramo** è solo testo in un raccoglitore: non gira da nessuna parte.
+
+Il legame è una **convenzione decisa dal progetto**: «quando qualcosa arriva su questo ramo, il sistema lo pubblica su quell'ambiente». La mappa non è mai deducibile da fuori — **sta scritta nel `CLAUDE.md` del progetto**, alla voce rami e ambienti. Se non sai qual è la tua, chiedila alla sessione: lei quel file lo legge.
+
+### ⭐ La cosa che toglie l'ansia: la configurazione non è programma
+
+I file che questa procedura tocca — `.claude/settings.json` e la parte di `CLAUDE.md` sulla software house — **non sono codice del prodotto**.
+
+- **Non vengono pubblicati** su nessun ambiente. Non finiscono davanti a un cliente.
+- **Non girano.** Nessuno li esegue: sono istruzioni che una sessione di lavoro legge quando parte.
+- **Non cambiano il comportamento del programma.** Cambiano il comportamento **dell'assistente**.
+
+> Conseguenza pratica: **non c'è un ambiente giusto o sbagliato dove metterli.** Devono solo stare **sul ramo da cui partono le tue sessioni**. Chi lavora su altri rami semplicemente non li vede, e per lui è come se non esistessero.
+
+È il motivo per cui questa procedura non interferisce con nessuno: non tocca niente di ciò che va in produzione.
+
+---
+
 > Il plugin viene servito dal **ramo principale** del repository della software house. Il lavoro fatto su un ramo di sviluppo non raggiunge i progetti finché non è unito.
