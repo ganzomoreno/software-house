@@ -53,14 +53,20 @@ Li orchestra **Silvana**, il coordinatore — la sessione principale. Silvana de
 Dalla cartella principale del progetto:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/ganzomoreno/software-house/main/scripts/installa.sh | bash
+curl -fsSL https://raw.githubusercontent.com/ganzomoreno/software-house/main/scripts/collega.sh | bash
 ```
 
-Copia i cinque agenti e le dodici discipline in `.claude/` del progetto. Poi commit, e **una sessione nuova**.
+Aggancia la software house come **sottomodulo** e crea dei **collegamenti** in `.claude/`. Nella storia del progetto entrano un puntatore e dei collegamenti — meno di 2 KB — **non i file**. Aggiornare significa spostare il puntatore:
 
-Diventano **file del progetto**: si caricano sempre — in locale, in cloud, per chiunque apra il repository — senza installazioni e senza dipendere da un servizio esterno. Per aggiornare, si riesegue lo stesso comando.
+```bash
+bash .software-house/scripts/collega.sh --aggiorna
+```
 
-> 🚀 **Istruzioni complete**, con le fasi di adattamento al contesto del progetto: [`docs/AVVIO-SU-UN-PROGETTO.md`](docs/AVVIO-SU-UN-PROGETTO.md).
+Poi commit, e **una sessione nuova**.
+
+> Se l'ambiente non regge collegamenti o sottomoduli, c'è il ripiego che funziona sempre: `scripts/installa.sh` copia i file dentro il progetto. Confronto fra i due in [`docs/MANUALE.md` § 6.2](docs/MANUALE.md).
+
+> 🚀 **Istruzioni complete**, con l'adattamento al contesto del progetto: [`docs/AVVIO-SU-UN-PROGETTO.md`](docs/AVVIO-SU-UN-PROGETTO.md).
 
 ### Perché non dal marketplace
 

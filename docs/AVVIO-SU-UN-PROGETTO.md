@@ -32,13 +32,17 @@ https://github.com/ganzomoreno/software-house/blob/main/docs/MANUALE.md
 
 Fai questi passi, in ordine, e lavora in silenzio fino alla fine.
 
-PASSO 1 — Installa la squadra nel progetto
+PASSO 1 — Collega la squadra al progetto
 Dalla cartella principale del progetto, esegui:
 
-curl -fsSL https://raw.githubusercontent.com/ganzomoreno/software-house/main/scripts/installa.sh | bash
+curl -fsSL https://raw.githubusercontent.com/ganzomoreno/software-house/main/scripts/collega.sh | bash
 
-Copia i cinque agenti e le discipline in .claude/agents/ e .claude/skills/.
-Riportami cosa ha stampato: la versione, e quanti agenti e discipline ha copiato.
+Aggancia la software house come sottomodulo e crea dei collegamenti in
+.claude/agents/ e .claude/skills/: nella storia del progetto entrano un
+puntatore e dei collegamenti, NON i file.
+Riportami cosa ha stampato: versione, quanti agenti e quante discipline.
+Poi verifica e dimmi: .software-house/ contiene davvero i file, e i
+collegamenti in .claude/skills/ puntano a qualcosa che esiste?
 
 NON usare il marketplace e non affidarti a extraKnownMarketplaces nel
 settings.json: quella dichiarazione registra il marketplace ma NON installa il
@@ -139,7 +143,10 @@ Prima di qualsiasi altra cosa, VERIFICA che sia davvero arrivata e dimmi cosa ve
    migrazioni-database · sicurezza-database
    (più "pipeline", che è il flusso di lavoro)
 3. Esiste nel progetto il file .claude/.software-house? Riportami la riga con
-   la versione. (È il registro di cosa è stato copiato dallo script.)
+   la versione, e dimmi se dice "COLLEGATA" oppure no.
+   Se dice COLLEGATA: verifica che .software-house/ contenga davvero i file e
+   che i collegamenti in .claude/skills/ non puntino nel vuoto. Se la cartella
+   è vuota, l'ambiente non ha recuperato il sottomodulo: dimmelo, è la causa.
    Nota: la checklist di processo all'avvio arriva da un hook del plugin e con
    l'installazione per copia diretta NON c'è. Non è un difetto: il flusso di
    lavoro sta nella disciplina "pipeline", che devi vedere fra le discipline.
@@ -182,7 +189,9 @@ Alla fine, oltre al lavoro, dimmi due cose:
 |---|---|---|
 | Nessun agente, nessuna disciplina — ma altri plugin risultano caricati | la squadra non è mai stata copiata nel progetto, oppure la copia non è sul ramo da cui è partita la sessione | esegui lo script della Fase 1 e verifica su quale ramo è finita la cartella `.claude/` |
 | Nessun agente, e nel `settings.json` c'è la dichiarazione del marketplace | è la trappola: quella dichiarazione **non installa il plugin** ([issue #32606](https://github.com/anthropics/claude-code/issues/32606)) | usa lo script di copia diretta, non il marketplace |
-| Gli agenti ci sono, le discipline no | copia parziale, o interrotta | riesegui lo script: è rieseguibile e ripulisce da solo |
+| Gli agenti ci sono, le discipline no | i collegamenti per gli agenti reggono, per le discipline no (o viceversa) | passa al modo copiato: `scripts/installa.sh` |
+| `.software-house/` è vuota e non carica niente | l'ambiente ha clonato il progetto **senza i sottomoduli** | prova `git submodule update --init`; se non regge a ogni sessione, passa al modo copiato |
+| Le discipline non compaiono nell'elenco ma funzionano se le nomini | [difetto noto](https://github.com/anthropics/claude-code/issues/14836): l'elenco non mostra le discipline collegate | nessun rimedio, e nessun problema: non usare quell'elenco per la verifica |
 | C'era tutto ieri, oggi no | la sessione è stata aperta prima che la copia arrivasse su quel ramo | apri una sessione nuova sul ramo giusto |
 | Discipline vecchie, senza le ultime aggiunte | lo script copia da `main` della software house: la novità è ancora su un ramo di sviluppo | uniscila a `main`, poi riesegui lo script |
 

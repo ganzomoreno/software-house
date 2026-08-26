@@ -3,7 +3,7 @@
 > **Cos'è questo documento.** Il manuale tecnico-funzionale completo: come funziona la squadra, cosa fa ognuno, quali discipline possiede, come si installa, come si estende.
 > **Com'è fatto.** A cipolla: ogni strato è più profondo del precedente. Fermati quando ti basta. Lo **Strato 0** si legge in un minuto; l'**Appendice** contiene ogni dettaglio.
 > **Per chi.** Il Business che vuole capire e spiegare · chi apre una sessione e deve lavorare · chi vuole estendere il metodo.
-> Ultimo aggiornamento: 2026-08-26 · plugin v0.7.0
+> Ultimo aggiornamento: 2026-08-26 · plugin v0.8.0
 
 **Documenti collegati:** il *perché* di tutto questo, e il piano, stanno in [`METODO.md`](METODO.md). Il modello da compilare su ogni progetto è [`../templates/CONTESTO-PROGETTO.md`](../templates/CONTESTO-PROGETTO.md).
 
@@ -632,21 +632,57 @@ La confusione più frequente è fra la cartella in cui si lavora e il posto da c
 
 > **La cartella in cui sei seduto non è la cartella da cui arriva il metodo.** Il plugin viene scaricato da GitHub; il progetto resta dov'è.
 
-## 6.2 Come si installa — la copia diretta
+## 6.2 Come si installa — due modi, e quale scegliere
+
+### ⭐ Modo A — collegata (preferito)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/ganzomoreno/software-house/main/scripts/collega.sh | bash
+```
+
+Aggancia la software house al progetto come **sottomodulo git** in `.software-house/`, e crea in `.claude/agents/` e `.claude/skills/` dei **collegamenti** che puntano lì.
+
+**Nella storia del progetto non entrano i file**: entrano collegamenti (modo `120000`) e un puntatore a un commit (modo `160000`). In tutto meno di 2 KB, contro le duemila righe della copia.
+
+| Comando | Cosa fa |
+|---|---|
+| `bash .software-house/scripts/collega.sh --aggiorna` | sposta il puntatore all'ultima versione |
+| `bash .software-house/scripts/collega.sh --stacca` | rimuove collegamenti e sottomodulo |
+
+**Aggiornare significa spostare un puntatore di un commit.** Il diff che vedi è una riga, non un file ricopiato — e nessuno può modificare per sbaglio una copia locale, perché copie locali non ce ne sono.
+
+> ⚠️ **Due cose vanno verificate sul campo la prima volta**, e finché non lo sono non dare per scontato che funzioni:
+> 1. **I collegamenti per gli agenti.** Per le discipline sono supportati e documentati: Claude Code segue il collegamento e legge `SKILL.md` dalla cartella di destinazione. Per gli **agenti** non è documentato.
+> 2. **Il recupero del sottomodulo in ambiente cloud.** Se l'ambiente clona il progetto senza i sottomoduli, `.software-house/` resta vuota e **tutti i collegamenti puntano nel vuoto**: non carica niente.
+>
+> **Il sintomo di entrambi è identico** a quello del marketplace rotto — la squadra non compare — quindi va distinto guardando se `.software-house/` contiene davvero i file.
+>
+> Nota minore e innocua: il comando che elenca le discipline [non mostra quelle collegate](https://github.com/anthropics/claude-code/issues/14836), anche quando funzionano. Non fidarti di quell'elenco per la verifica: chiedi invece all'agente di aprirne una per nome.
+
+### Modo B — copiata (ripiego che funziona sempre)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/ganzomoreno/software-house/main/scripts/installa.sh | bash
 ```
 
-Da eseguire **nella cartella principale del progetto**. Copia i cinque agenti e le discipline dentro `.claude/agents/` e `.claude/skills/` del progetto. Poi si fa commit e si porta sul ramo da cui partono le sessioni.
+Copia agenti e discipline dentro `.claude/` del progetto. **Non dipende da niente**: né da collegamenti, né da sottomoduli, né dal marketplace. Se il Modo A non regge nell'ambiente, questo regge.
 
-**Perché così, e non con il marketplace.** Perché gli agenti e le discipline diventano **file del progetto**, e i file del progetto si caricano sempre: in locale, in cloud, per chiunque apra il repository, senza installazioni, senza permessi da concedere, senza dipendere da un servizio esterno raggiungibile.
+Costo: duemila righe duplicate nella storia del progetto, e il rischio che qualcuno modifichi la copia invece dell'originale. Lo script scrive un'intestazione di avvertimento nel registro `.claude/.software-house` proprio per quello.
 
-Lo script è **rieseguibile**: tiene un elenco di ciò che ha installato (`.claude/.software-house`), lo rimuove prima di riscrivere, e non tocca gli agenti e le discipline propri del progetto.
+Anche questo è **rieseguibile** e rimuove la copia precedente prima di riscrivere.
 
-**Per aggiornare** a una versione nuova della software house: si riesegue lo stesso comando, si fa commit, e la sessione successiva ha la versione nuova.
+### Quale scegliere
 
-> ⚠️ **Non modificare quei file dentro il progetto.** Sono una copia: la riesecuzione dello script li sovrascrive. Le correzioni si fanno nel repository della software house — è il senso di avere un punto solo.
+| | Modo A — collegata | Modo B — copiata |
+|---|---|---|
+| Cosa entra nella storia del progetto | un puntatore e dei collegamenti (~2 KB) | i file, tutti (~2.000 righe) |
+| Aggiornare | sposta un puntatore | ricopia i file |
+| Rischio di modifiche locali divergenti | nessuno: non c'è una copia | reale, mitigato da un avvertimento |
+| Funziona ovunque senza verifiche | **da verificare** | **sì** |
+
+**Parti dal Modo A. Se la verifica in sessione nuova non lo conferma, passa al Modo B senza rimpianti**: la sostanza del metodo è la stessa, cambia solo come arriva.
+
+> In entrambi i modi la versione è **bloccata**, ed è giusto così: un aggiornamento della software house non deve cambiare il metodo sotto i piedi a chi sta lavorando. Si aggiorna quando lo decidi tu.
 
 ## 6.3 🔴 Perché NON usiamo il marketplace (e la trappola in cui siamo caduti)
 
@@ -795,7 +831,9 @@ Non le scriviamo prima di averne bisogno: la regola è che una disciplina nasce 
 ```
 software-house/
 ├── README.md                          vetrina e installazione
-├── scripts/installa.sh                copia agenti e discipline in un progetto
+├── scripts/
+│   ├── collega.sh                     aggancia la software house a un progetto (sottomodulo + collegamenti)
+│   └── installa.sh                    ripiego: la copia dentro il progetto
 ├── .claude-plugin/marketplace.json    definizione del marketplace  ← la versione qui
 ├── docs/
 │   ├── MANUALE.md                     questo documento — come funziona, tutto
