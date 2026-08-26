@@ -8,14 +8,14 @@
 
 ## Perché servono due sessioni
 
-Il plugin viene letto **all'avvio della sessione**. Una sessione non può accendere sé stessa: se la configurazione non c'era quando è partita, non la vedrà comparire nemmeno dopo averla scritta.
+Agenti e discipline vengono letti **all'avvio della sessione**. Una sessione non può accendere sé stessa: se i file non c'erano quando è partita, non li vedrà comparire nemmeno dopo averli scritti.
 
 | | Cosa fa | Cosa serve |
 |---|---|---|
-| **Fase 1** | scrive la configurazione e il contesto, e li porta sul ramo | una sessione qualsiasi sul progetto |
+| **Fase 1** | copia agenti e discipline nel progetto, scrive il contesto, porta tutto sul ramo | una sessione qualsiasi sul progetto |
 | **Fase 2** | verifica che la squadra sia davvero arrivata, e la mette alla prova | una **sessione nuova**, aperta dopo la Fase 1 |
 
-> Se la configurazione c'è già e il ramo principale è aggiornato, la Fase 1 non fa nulla e lo dice. Non è mai dannosa.
+> La Fase 1 è **rieseguibile**: rimuove la copia precedente prima di riscrivere e non tocca gli agenti e le discipline propri del progetto. Non è mai dannosa.
 
 ---
 
@@ -24,28 +24,26 @@ Il plugin viene letto **all'avvio della sessione**. Una sessione non può accend
 Copia da qui, incolla nella sessione sul progetto.
 
 ```text
-Devi accendere su questo progetto la "software house portatile": un plugin con
-cinque agenti specializzati e dodici discipline di mestiere.
+Devi accendere su questo progetto la "software house portatile": cinque agenti
+specializzati e dodici discipline di mestiere.
 
 Il manuale completo è qui, leggilo prima di procedere:
 https://github.com/ganzomoreno/software-house/blob/main/docs/MANUALE.md
 
 Fai questi passi, in ordine, e lavora in silenzio fino alla fine.
 
-PASSO 1 — Configurazione del progetto
-Verifica se esiste .claude/settings.json in questo repository e se contiene il
-richiamo al marketplace "ganzomoreno". Se manca, o se manca solo una delle due
-chiavi, aggiungilo SENZA rimuovere le altre impostazioni già presenti:
+PASSO 1 — Installa la squadra nel progetto
+Dalla cartella principale del progetto, esegui:
 
-{
-  "extraKnownMarketplaces": {
-    "ganzomoreno": { "source": { "source": "github", "repo": "ganzomoreno/software-house" } }
-  },
-  "enabledPlugins": { "software-house@ganzomoreno": true }
-}
+curl -fsSL https://raw.githubusercontent.com/ganzomoreno/software-house/main/scripts/installa.sh | bash
 
-Va nel file di configurazione DEL PROGETTO (versionato), non su quello della
-macchina: è l'unico modo perché funzioni anche in cloud e per chiunque nel team.
+Copia i cinque agenti e le discipline in .claude/agents/ e .claude/skills/.
+Riportami cosa ha stampato: la versione, e quanti agenti e discipline ha copiato.
+
+NON usare il marketplace e non affidarti a extraKnownMarketplaces nel
+settings.json: quella dichiarazione registra il marketplace ma NON installa il
+plugin (difetto noto di Claude Code, issue #32606). Se nel settings.json c'è
+già, lasciala dov'è: non fa danno.
 
 PASSO 2 — Contesto di progetto
 Il plugin porta il mestiere; il contesto resta qui. Verifica che il CLAUDE.md di
@@ -113,7 +111,7 @@ Su progetti con più ambienti questa manovra è quasi sempre **vietata** (si pro
 
 **E in ogni caso: apri la Fase 2 sul ramo dove il lavoro è finito davvero.**
 
-> Attenzione a cosa dipende da cosa. La configurazione `.claude/settings.json` decide **se il plugin arriva**; il `CLAUDE.md` decide **come si comporta** (le discipline escluse, il contesto). Se la configurazione c'era già da prima, il plugin arriva comunque — ma le esclusioni scritte in Fase 1 restano invisibili finché il ramo non è unito. **Il sintomo è subdolo:** la squadra c'è, sembra tutto a posto, e applica discipline che avevi escluso.
+> Attenzione a cosa dipende da cosa. I file in `.claude/agents/` e `.claude/skills/` decidono **se la squadra arriva**; il `CLAUDE.md` decide **come si comporta** (le discipline escluse, il contesto). Sono sullo stesso ramo, quindi arrivano insieme — ma se porti solo una delle due cose, il sintomo è subdolo: la squadra c'è, sembra tutto a posto, e applica discipline che avevi escluso.
 
 **Poi chiudi la sessione della Fase 1.**
 
@@ -140,8 +138,11 @@ Prima di qualsiasi altra cosa, VERIFICA che sia davvero arrivata e dimmi cosa ve
    casi-di-prova · revisione-onesta · verifica-per-mutazione ·
    migrazioni-database · sicurezza-database
    (più "pipeline", che è il flusso di lavoro)
-3. All'avvio di questa sessione hai ricevuto una checklist di processo della
-   software house? Riportami la prima riga.
+3. Esiste nel progetto il file .claude/.software-house? Riportami la riga con
+   la versione. (È il registro di cosa è stato copiato dallo script.)
+   Nota: la checklist di processo all'avvio arriva da un hook del plugin e con
+   l'installazione per copia diretta NON c'è. Non è un difetto: il flusso di
+   lavoro sta nella disciplina "pipeline", che devi vedere fra le discipline.
 4. Il CLAUDE.md di questo progetto contiene la sezione «Discipline della software
    house NON in uso su questo progetto»? Riportamela testualmente.
    Se NON c'è, quasi certamente il ramo della Fase 1 non è stato unito: dimmelo,
@@ -179,46 +180,10 @@ Alla fine, oltre al lavoro, dimmi due cose:
 
 | Sintomo | Causa quasi certa | Rimedio |
 |---|---|---|
-| Nessun agente, nessuna disciplina | manca `.claude/settings.json`, o non è sul ramo che la sessione usa | rifai la Fase 1 e verifica su quale ramo è finita |
-| Gli agenti ci sono, le discipline no | il plugin arriva da una versione vecchia del ramo principale | verifica che `main` di `ganzomoreno/software-house` sia almeno alla v0.6.0 |
-| C'era tutto ieri, oggi no | la sessione è stata aperta prima dell'aggiornamento | apri una sessione nuova |
+| Nessun agente, nessuna disciplina — ma altri plugin risultano caricati | la squadra non è mai stata copiata nel progetto, oppure la copia non è sul ramo da cui è partita la sessione | esegui lo script della Fase 1 e verifica su quale ramo è finita la cartella `.claude/` |
+| Nessun agente, e nel `settings.json` c'è la dichiarazione del marketplace | è la trappola: quella dichiarazione **non installa il plugin** ([issue #32606](https://github.com/anthropics/claude-code/issues/32606)) | usa lo script di copia diretta, non il marketplace |
+| Gli agenti ci sono, le discipline no | copia parziale, o interrotta | riesegui lo script: è rieseguibile e ripulisce da solo |
+| C'era tutto ieri, oggi no | la sessione è stata aperta prima che la copia arrivasse su quel ramo | apri una sessione nuova sul ramo giusto |
+| Discipline vecchie, senza le ultime aggiunte | lo script copia da `main` della software house: la novità è ancora su un ramo di sviluppo | uniscila a `main`, poi riesegui lo script |
 
-## Appendice — Rami e ambienti, per chi non è tecnico
-
-### Cos'è un ramo
-
-Immagina il repository come **un raccoglitore di documenti condiviso**.
-
-- Il **ramo principale** (`main`) è la copia ufficiale: quella che vale, quella che gli altri leggono.
-- Un **ramo** è una **fotocopia di lavoro**. Ci scrivi sopra senza disturbare nessuno: finché stai lì, la copia ufficiale non cambia di una virgola.
-- **Unire un ramo** (*merge*) vuol dire: *«prendi le mie modifiche e portale sulla copia ufficiale».* Da quel momento valgono per tutti.
-
-Finché un ramo non è unito, **il suo lavoro esiste ma non conta**: chi legge la copia ufficiale non lo vede.
-
-### Perché ci sono tanti rami e nessuno li ha fatti apposta
-
-Ogni sessione di lavoro ne crea uno nuovo, automaticamente, per non pestare i piedi alle altre. Quindi si accumulano: sono i resti delle sessioni passate. **Non fanno danno** — sono fotocopie ferme in un cassetto. Si possono cancellare quando il loro lavoro è stato unito, ma non è urgente.
-
-### Rami e ambienti: due cose diverse che si somigliano
-
-Un **ambiente** è un posto dove il programma **gira davvero**: produzione (i clienti veri), staging (le prove prima di pubblicare), sandbox (il campo giochi).
-
-Un **ramo** è solo testo in un raccoglitore: non gira da nessuna parte.
-
-Il legame è una **convenzione decisa dal progetto**: «quando qualcosa arriva su questo ramo, il sistema lo pubblica su quell'ambiente». La mappa non è mai deducibile da fuori — **sta scritta nel `CLAUDE.md` del progetto**, alla voce rami e ambienti. Se non sai qual è la tua, chiedila alla sessione: lei quel file lo legge.
-
-### ⭐ La cosa che toglie l'ansia: la configurazione non è programma
-
-I file che questa procedura tocca — `.claude/settings.json` e la parte di `CLAUDE.md` sulla software house — **non sono codice del prodotto**.
-
-- **Non vengono pubblicati** su nessun ambiente. Non finiscono davanti a un cliente.
-- **Non girano.** Nessuno li esegue: sono istruzioni che una sessione di lavoro legge quando parte.
-- **Non cambiano il comportamento del programma.** Cambiano il comportamento **dell'assistente**.
-
-> Conseguenza pratica: **non c'è un ambiente giusto o sbagliato dove metterli.** Devono solo stare **sul ramo da cui partono le tue sessioni**. Chi lavora su altri rami semplicemente non li vede, e per lui è come se non esistessero.
-
-È il motivo per cui questa procedura non interferisce con nessuno: non tocca niente di ciò che va in produzione.
-
----
-
-> Il plugin viene servito dal **ramo principale** del repository della software house. Il lavoro fatto su un ramo di sviluppo non raggiunge i progetti finché non è unito.
+> Lo script copia dal **ramo principale** del repository della software house. Il lavoro fatto su un ramo di sviluppo non raggiunge i progetti finché non è unito.

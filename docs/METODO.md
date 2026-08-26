@@ -122,6 +122,16 @@ Dentro il progetto, in un file di configurazione (`.claude/settings.json`), si d
 
 Da quel momento, aprendo una sessione su quel progetto, i cinque ruoli ci sono già — senza copiarli, senza duplicarli.
 
+### ⚠️ Correzione del 26/08/2026 — questo meccanismo non funziona
+
+La sezione qui sotto descrive il modo previsto da Claude Code per distribuire il plugin: dichiararlo nel `.claude/settings.json` del progetto. **Alla prima prova su un progetto vero non ha funzionato**: la dichiarazione era corretta e versionata, e la squadra non è arrivata in sessione.
+
+È un difetto noto di Claude Code ([issue #32606](https://github.com/anthropics/claude-code/issues/32606), chiusa senza intervento): il marketplace viene registrato ma i plugin non vengono mai installati.
+
+**Il metodo si installa ora per copia diretta** — gli agenti e le discipline diventano file del progetto. Vedi [`MANUALE.md` § 6.2 e § 6.3](MANUALE.md).
+
+Il ragionamento della sezione seguente **resta valido** — la configurazione deve viaggiare col progetto, non stare sulla macchina — ed è il motivo per cui la copia diretta è la risposta giusta: i file del progetto viaggiano col progetto per definizione.
+
 ### Perché la configurazione va nel progetto e non sul computer
 
 C'è anche un modo di accenderlo **sul computer**, valido per tutte le sessioni di quella macchina. Funziona, ma ha un limite fatale:
