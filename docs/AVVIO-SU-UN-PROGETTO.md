@@ -81,7 +81,18 @@ RISPONDIMI UNA VOLTA SOLA, alla fine, in elenchi puntati:
 Niente cronaca dei passi, niente tabelle.
 ```
 
-**Dopo la Fase 1:** se la configurazione è stata aggiunta ora, va portata sul ramo che le sessioni useranno. Poi **chiudi la sessione**.
+## ⚠️ Fra la Fase 1 e la Fase 2 — il passaggio che si dimentica
+
+La Fase 1 lascia il suo lavoro **su un ramo**, come deve. Ma la sessione della Fase 2 parte dal ramo che le indichi: se è il ramo principale, **non vedrà nulla di quanto scritto in Fase 1**.
+
+Quindi, prima di aprire la sessione nuova, una delle due:
+
+- **unisci il ramo della Fase 1** al ramo principale del progetto (la via normale), **oppure**
+- **apri la Fase 2 direttamente su quel ramo**, se preferisci provare prima di unire.
+
+> Attenzione a cosa dipende da cosa. La configurazione `.claude/settings.json` decide **se il plugin arriva**; il `CLAUDE.md` decide **come si comporta** (le discipline escluse, il contesto). Se la configurazione c'era già da prima, il plugin arriva comunque — ma le esclusioni scritte in Fase 1 restano invisibili finché il ramo non è unito. **Il sintomo è subdolo:** la squadra c'è, sembra tutto a posto, e applica discipline che avevi escluso.
+
+**Poi chiudi la sessione della Fase 1.**
 
 ---
 
@@ -108,7 +119,10 @@ Prima di qualsiasi altra cosa, VERIFICA che sia davvero arrivata e dimmi cosa ve
    (più "pipeline", che è il flusso di lavoro)
 3. All'avvio di questa sessione hai ricevuto una checklist di processo della
    software house? Riportami la prima riga.
-4. Il CLAUDE.md di questo progetto contiene la sezione delle discipline escluse?
+4. Il CLAUDE.md di questo progetto contiene la sezione «Discipline della software
+   house NON in uso su questo progetto»? Riportamela testualmente.
+   Se NON c'è, quasi certamente il ramo della Fase 1 non è stato unito: dimmelo,
+   non proseguire.
 
 Se manca qualcosa, FERMATI e dimmelo: non provare a rimediare da sola.
 Se c'è tutto, dimmi "squadra a bordo" e aspetta il primo lavoro.
