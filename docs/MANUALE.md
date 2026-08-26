@@ -3,7 +3,7 @@
 > **Cos'è questo documento.** Il manuale tecnico-funzionale completo: come funziona la squadra, cosa fa ognuno, quali discipline possiede, come si installa, come si estende.
 > **Com'è fatto.** A cipolla: ogni strato è più profondo del precedente. Fermati quando ti basta. Lo **Strato 0** si legge in un minuto; l'**Appendice** contiene ogni dettaglio.
 > **Per chi.** Il Business che vuole capire e spiegare · chi apre una sessione e deve lavorare · chi vuole estendere il metodo.
-> Ultimo aggiornamento: 2026-08-26 · plugin v0.10.0
+> Ultimo aggiornamento: 2026-08-26 · plugin v0.11.0
 
 **Documenti collegati:** il *perché* di tutto questo, e il piano, stanno in [`METODO.md`](METODO.md). Il modello da compilare su ogni progetto è [`../templates/CONTESTO-PROGETTO.md`](../templates/CONTESTO-PROGETTO.md).
 
@@ -678,8 +678,11 @@ Una sessione parte dal ramo che le viene indicato, e **non è sempre quello che 
 **Il sintomo è indistinguibile da un'installazione fallita**, e porta a diagnosticare un problema che su quel ramo esiste ma altrove no.
 
 ```bash
-git branch --show-current   # il primo comando di ogni verifica
+git branch --show-current                                  # dove credi di essere
+git rev-list --left-right --count origin/RAMO-ATTESO...HEAD  # dove sei davvero
 ```
+
+**Il metro è il secondo comando, non il primo.** In ambiente remoto una sessione lavora quasi sempre su un ramo con un nome proprio, e va benissimo: quello che conta è se l'**albero** è lo stesso. `0 0` significa identico — stesso contenuto, nome diverso. Fermarsi per il solo nome fa perdere tempo su un problema che non esiste.
 
 > Ci siamo cascati il 26/08/2026: un'intera diagnosi condotta su un ramo che discendeva da `main`, mentre la squadra era già installata e funzionante sul ramo di lavoro vero. **Il primo comando di ogni verifica è quello che dice dove sei.**
 
@@ -708,6 +711,8 @@ git check-ignore -q .claude/skills/pipeline ; echo $?
 | Aggiornare | sposta un puntatore | ricopia i file |
 | Rischio di modifiche locali divergenti | nessuno: non c'è una copia | reale, mitigato da un avvertimento |
 | Funziona ovunque senza verifiche | **da verificare** | **sì** |
+
+> ✅ **Il Modo B è verificato sul campo** (Karica, 26/08/2026): cinque agenti disponibili in sessione e discipline aperte per nome con il contenuto giusto. Il Modo A resta da verificare.
 
 **Parti dal Modo A. Se la verifica in sessione nuova non lo conferma, passa al Modo B senza rimpianti**: la sostanza del metodo è la stessa, cambia solo come arriva.
 

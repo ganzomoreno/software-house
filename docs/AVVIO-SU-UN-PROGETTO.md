@@ -132,13 +132,22 @@ agenti specializzati con dodici discipline di mestiere, orchestrati da te
 
 Manuale: https://github.com/ganzomoreno/software-house/blob/main/docs/MANUALE.md
 
-CONTROLLO ZERO — su quale ramo sei davvero?
-Prima di ogni altra cosa esegui:
+CONTROLLO ZERO — stai guardando l'albero giusto?
+Prima di ogni altra cosa esegui, sostituendo RAMO-ATTESO con quello che ti ho
+indicato:
   git branch --show-current
-  git log --oneline -1
-Dimmi il ramo. Se non è quello su cui mi aspettavo che fossi, FERMATI: ogni
-verifica fatta sul ramo sbagliato descrive un altro mondo, e ci fa inseguire un
-problema che non esiste.
+  git fetch origin --quiet
+  git rev-list --left-right --count origin/RAMO-ATTESO...HEAD
+
+Il metro è la TERZA riga, non il nome del ramo: in ambiente remoto la sessione
+lavora quasi sempre su un ramo con un nome proprio, ed è normale.
+- "0 0" → stesso identico albero del ramo atteso: prosegui, va bene così.
+- primo numero > 0 → ti mancano dei commit: fai un fetch e allineati.
+- secondo numero > 0 → hai roba in più: dimmi cosa, prima di proseguire.
+- il comando fallisce → il ramo atteso non esiste con quel nome: FERMATI.
+
+Una verifica fatta su un albero diverso descrive un altro mondo e ci fa
+inseguire un problema che non esiste.
 
 Poi VERIFICA che la squadra sia davvero arrivata e dimmi cosa vedi:
 
