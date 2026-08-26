@@ -3,7 +3,7 @@
 > **Cos'è questo documento.** Il manuale tecnico-funzionale completo: come funziona la squadra, cosa fa ognuno, quali discipline possiede, come si installa, come si estende.
 > **Com'è fatto.** A cipolla: ogni strato è più profondo del precedente. Fermati quando ti basta. Lo **Strato 0** si legge in un minuto; l'**Appendice** contiene ogni dettaglio.
 > **Per chi.** Il Business che vuole capire e spiegare · chi apre una sessione e deve lavorare · chi vuole estendere il metodo.
-> Ultimo aggiornamento: 2026-08-26 · plugin v0.5.0
+> Ultimo aggiornamento: 2026-08-26 · plugin v0.6.0
 
 **Documenti collegati:** il *perché* di tutto questo, e il piano, stanno in [`METODO.md`](METODO.md). Il modello da compilare su ogni progetto è [`../templates/CONTESTO-PROGETTO.md`](../templates/CONTESTO-PROGETTO.md).
 
@@ -696,6 +696,27 @@ Il contrario è altrettanto vero: **se una regola qui non calza su un progetto, 
 5. Collegala a un agente: `skills:` nel suo frontmatter se serve **sempre**, oppure una riga nella sua sezione «Discipline da consultare» con la **condizione** che la richiede.
 6. Aggiorna: questo manuale (Strato 4 e la tabella 5.3), il `README.md`, e la versione in `plugin.json` **e** in `marketplace.json` — devono restare allineate.
 
+## 7.4 Come un progetto esclude una disciplina
+
+Il plugin porta **tutto** il mestiere. Non tutti i progetti usano tutto: una competenza può essere in mano a qualcun altro, o non applicarsi.
+
+**L'esclusione è contesto di progetto, non mestiere.** Non si toglie la disciplina dal plugin — resta lì per gli altri progetti. Si dichiara nel `CLAUDE.md` del progetto, in una sezione dedicata, e Silvana la legge a ogni sessione.
+
+La forma:
+
+```markdown
+## Discipline della software house NON in uso su questo progetto
+- `<nome-disciplina>` — <chi se ne occupa invece> — <dal quando, e chi ha deciso>
+```
+
+**Tre regole perché l'esclusione non diventi un buco.**
+
+1. **Si scrive chi se ne occupa al posto nostro.** Un'esclusione senza destinatario non è una delega: è una competenza che non ha più nessun proprietario.
+2. **Si scrive cosa smette di essere controllato.** Escludere `sicurezza-database` significa che il `code-reviewer` non solleverà più i rilievi su permessi e policy. Va detto, perché è esattamente ciò che il cancello smette di fermare.
+3. **Ha una data e un decisore.** Un'esclusione senza data non si rivede mai, e fra un anno nessuno saprà se vale ancora.
+
+> ⚠️ **L'esclusione non si estende da sola.** Vale per la disciplina nominata, non per il tema. Escludere la sicurezza del database non esclude i criteri negativi dell'analista (chi non deve potere) né le prove sulle transizioni vietate: quelli restano, perché sono correttezza funzionale, non sicurezza di sistema.
+
 ## 7.3 Candidate future
 
 Non le scriviamo prima di averne bisogno: la regola è che una disciplina nasce da un attrito vero. Queste sono emerse come plausibili e restano in attesa di un caso reale:
@@ -735,9 +756,8 @@ software-house/
 ├── README.md                          vetrina e installazione
 ├── .claude-plugin/marketplace.json    definizione del marketplace  ← la versione qui
 ├── docs/
-│   ├── MANUALE.md                     questo documento
-│   ├── METODO.md                      il perché, e il piano di unificazione
-│   └── RICERCA-SKILL-E-AGENTI.md      ricerca 2026-08-26 su skill e dimensionamento
+│   ├── MANUALE.md                     questo documento — come funziona, tutto
+│   └── METODO.md                      il perché, e il piano di unificazione
 ├── templates/CONTESTO-PROGETTO.md     modello da compilare su ogni progetto
 └── plugins/software-house/
     ├── .claude-plugin/plugin.json     manifesto del plugin  ← e anche qui
@@ -769,6 +789,27 @@ software-house/
 | 2026-08-26 | **Niente skill di sicurezza esterne** | infrastruttura e sicurezza di sistema sono degli sviluppatori esterni. La sicurezza del codice che scriviamo noi resta nostra ed è coperta da `sicurezza-database` |
 | 2026-08-26 | Solo **conoscenza di riferimento**, mai metodo, dentro le discipline | una disciplina di metodo darebbe all'agente due padroni |
 | 2026-08-26 | Le discipline vanno **precaricate o nominate** | un agente non vede l'elenco delle discipline disponibili: l'innesco automatico non funziona dentro di lui |
+
+---
+
+# Appendice D — Su cosa si fondano queste scelte
+
+Le decisioni dell'Appendice C nascono da una ricerca condotta il **26/08/2026**: sei angoli di indagine, 24 fonti lette (quasi tutte documentazione primaria), 100 affermazioni estratte, le 25 principali verificate ciascuna da tre verificatori indipendenti incaricati di **confutarle** — 23 confermate, 2 respinte.
+
+**Le fonti che reggono le decisioni:**
+
+| Fonte | Cosa stabilisce |
+|---|---|
+| [Subagents — what loads at startup](https://code.claude.com/docs/en/sub-agents) | un agente non riceve l'elenco delle discipline disponibili (§5.1); il campo di precaricamento inietta il **contenuto completo** |
+| [Skills](https://code.claude.com/docs/en/skills) | il costo di un elenco di discipline e i suoi limiti; il ciclo di vita di una disciplina in contesto |
+| [How and when to use subagents](https://claude.com/blog/subagents-in-claude-code) | i nuovi agenti servono per **isolare contesto**; è sconsigliato spezzare fasi che condividono contesto |
+| [Steering Claude Code](https://claude.com/blog/steering-claude-code-skills-hooks-rules-subagents-and-more) | solo gli hook e i permessi sono deterministici: una regola in un prompt non lo è (§5.5) |
+| [Equipping agents with Agent Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) | il metodo di scrittura parte dai **gap osservati**, non da un catalogo scritto a tavolino |
+| [Discover plugins](https://code.claude.com/docs/en/discover-plugins) | cosa offre il catalogo ufficiale, e il costo di contesto per turno di ogni pacchetto installato |
+
+**Due cautele, dichiarate.**
+1. **Nessuna fonte porta evidenza quantitativa** che una pipeline multi-agente con cancelli produca codice migliore o più veloce di una sessione singola ben attrezzata. La letteratura disponibile è descrittiva. Il nostro metro resta l'attrito sul campo.
+2. **L'ecosistema evolve in fretta.** I dettagli tecnici dello Strato 5 vanno riverificati fra qualche mese: sono stati veri il 26/08/2026.
 
 ---
 
