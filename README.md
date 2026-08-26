@@ -93,6 +93,15 @@ Da lì vale per ogni sessione su quel progetto: locale, cloud, qualunque macchin
 plugins/software-house/
 ├── agents/                            i cinque ruoli
 ├── skills/pipeline/                   il flusso: tier, cancelli, autonomia di Silvana
+│
+│   ── una disciplina per ruolo, sempre attiva dentro il suo mestiere ──
+├── skills/interfacce-usabili/         ux-designer · i cinque stati, il pavimento di accessibilità, i moduli
+├── skills/criteri-di-accettazione/    analista · la forma SE/ALLORA, le parole vietate, i criteri negativi
+├── skills/codice-verificabile/        developer · separare la logica dal mondo, i numeri con la baseline
+├── skills/casi-di-prova/              test-farm · classi, bordi, la famiglia del nulla, le transizioni vietate
+├── skills/revisione-onesta/           code-reviewer · cosa merita un rosso, le trappole da entrambi i lati
+│
+│   ── tre trasversali, per chi tocca il codice ──
 ├── skills/verifica-per-mutazione/     come si prova che un test intercetta davvero il difetto
 ├── skills/migrazioni-database/        migrazioni senza perdere un presidio: numerazione, forward-only, guard test
 ├── skills/sicurezza-database/         le trappole ricorrenti delle policy e delle funzioni privilegiate

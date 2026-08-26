@@ -2,7 +2,7 @@
 
 > **A cosa serve questo documento:** sapere chi puoi chiamare, per cosa, e con quali parole.
 > **Per chi:** il Business, quando vuole indirizzare il lavoro invece di lasciar decidere Silvana.
-> Ultimo aggiornamento: 2026-08-26
+> Ultimo aggiornamento: 2026-08-26 · plugin v0.4.0
 
 ---
 
@@ -40,7 +40,7 @@ Se tu non dici niente, **sceglie lei**. Se tu dici un nome, **usa quello**.
 
 **Cosa NON fa.** Non scrive codice. Mai.
 
-**Skill in dotazione.** Nessuna — lavora su ciò che vede, non su una disciplina tecnica.
+**Disciplina in dotazione (sempre attiva):** `interfacce-usabili` — le regole verificabili di una schermata che funziona.
 
 ---
 
@@ -54,7 +54,7 @@ Se tu non dici niente, **sceglie lei**. Se tu dici un nome, **usa quello**.
 
 **Cosa NON fa.** Non implementa. E se la tua richiesta è ambigua **non sceglie in silenzio**: ti mette davanti le alternative.
 
-**Skill in dotazione.** Nessuna precaricata.
+**Disciplina in dotazione (sempre attiva):** `criteri-di-accettazione` — come si scrive una frase che due persone non possono leggere in due modi.
 
 ---
 
@@ -68,9 +68,9 @@ Se tu non dici niente, **sceglie lei**. Se tu dici un nome, **usa quello**.
 
 **Cosa NON fa.** **Non scrive i propri test** (li scrive la test-farm) e **non fa commit**. È il principio che regge tutto: chi giudica non è chi esegue.
 
-**Skill in dotazione.** Nessuna precaricata. Il suo prompt gli dice di aprirle per nome quando servono:
-- tocca il database → apre `migrazioni-database` prima di scrivere
-- tocca permessi, ruoli o policy → apre `sicurezza-database`
+**Disciplina in dotazione (sempre attiva):** `codice-verificabile` — come si scrive codice che qualcun altro possa dimostrare.
+
+**In più, aperte per nome quando servono:** `migrazioni-database` se tocca il database, `sicurezza-database` se tocca permessi o ruoli.
 
 ---
 
@@ -84,7 +84,7 @@ Se tu non dici niente, **sceglie lei**. Se tu dici un nome, **usa quello**.
 
 **Cosa NON fa.** Non tocca mai il codice di produzione, solo i file di test. E non fabbrica dati per far comparire il risultato atteso.
 
-**Skill in dotazione (precaricata):** `verifica-per-mutazione` — sempre attiva, perché è il cuore del suo mestiere.
+**Discipline in dotazione (sempre attive):** `casi-di-prova` — quali casi scegliere; e `verifica-per-mutazione` — come provare che i test mordano davvero.
 
 ---
 
@@ -98,28 +98,58 @@ Se tu non dici niente, **sceglie lei**. Se tu dici un nome, **usa quello**.
 
 **Cosa NON fa.** Non applica lui le correzioni. Emette il giudizio, il lavoro torna a chi l'ha fatto.
 
-**Skill in dotazione (precaricata):** `verifica-per-mutazione` — sempre attiva: è lo strumento con cui smaschera i test che non mordono.
+**Discipline in dotazione (sempre attive):** `revisione-onesta` — come non sbilanciarsi né verso il sì né verso il no; e `verifica-per-mutazione` — con cui smaschera i test che non mordono.
 
 ---
 
-## Le tre discipline (skill)
+## Le otto discipline
 
-Sono manuali, non persone. Ognuna nasce da un errore vero, pagato su un progetto.
+Sono **manuali, non persone**. Ognuna nasce da un errore vero — pagato su un progetto, non immaginato.
 
-### `verifica-per-mutazione`
-**Il problema che risolve:** un test verde non dimostra che il codice funziona, dimostra che il test passa.
-**Cosa impone:** rompere il codice di proposito e controllare che il test se ne accorga — poi riportare i numeri (*"20 mutazioni applicate, 20 intercettate"*). Senza numeri, non è una verifica: è un'affermazione.
-**Chi la usa:** `test-farm` e `code-reviewer`, **sempre** (precaricata).
+Si dividono in due gruppi: **cinque di ruolo**, una per ciascuno dei cinque, sempre attive dentro il loro mestiere; e **tre trasversali**, che riguardano chi tocca il codice e si aprono quando servono.
 
-### `migrazioni-database`
-**Il problema che risolve:** riscrivere una parte del database partendo da una versione vecchia, e cancellare senza accorgersene una protezione che qualcuno aveva aggiunto dopo. È già costato una riparazione d'emergenza su un progetto vero.
-**Cosa impone:** guardare qual è davvero l'ultima versione prima di riscrivere, non tornare mai indietro, ed elencare per nome le protezioni conservate.
-**Chi la usa:** `developer` e `code-reviewer`, che la aprono per nome **quando il lavoro tocca il database**.
+---
 
-### `sicurezza-database`
-**Il problema che risolve:** proteggere una cosa solo nell'applicazione, lasciandola aperta a chi chiama il sistema da fuori.
-**Cosa impone:** la regola vive nel database, non nello schermo. Se una cosa non deve essere possibile, deve essere *impossibile*, anche saltando l'interfaccia.
-**Chi la usa:** `developer` e `code-reviewer`, che la aprono per nome **quando il lavoro tocca permessi, ruoli o policy**.
+### Le cinque di ruolo
+
+#### `interfacce-usabili` → ux-designer
+**Il problema.** Il difetto di interfaccia più diffuso non è brutto: è una schermata disegnata **solo per il caso in cui tutto va bene**.
+**Cosa impone.** Ogni schermata ha cinque stati, non uno — pieno, vuoto, in caricamento, in errore, troppo pieno — e tutti e cinque vanno progettati. Più un pavimento di accessibilità che non è opinabile (contrasto, dimensione dei bersagli, tastiera, etichette vere), il tempo di risposta, il comportamento su schermo stretto, e i moduli. Chiude con il test che separa un problema da una preferenza: *cosa non riesce a fare l'utente a causa di questo?*
+
+#### `criteri-di-accettazione` → analista-funzionale
+**Il problema.** Un criterio che due persone leggono in due modi non è un criterio: è un desiderio. E siccome quel criterio è il contratto fra chi implementa, chi prova e chi revisiona, se è ambiguo tutti e tre lavorano su tre cose diverse — senza accorgersene.
+**Cosa impone.** La forma «SE… ALLORA…» con entrambe le metà osservabili dall'esterno. Un elenco di **parole vietate** (*correttamente, appropriato, intuitivo, veloce, se necessario*) con cosa scrivere al loro posto. Un criterio, un comportamento solo. E soprattutto i **criteri negativi** — chi non deve potere, cosa non deve cambiare — che quasi nessuno scrive e che sono dove vivono i guasti costosi.
+
+#### `codice-verificabile` → developer
+**Il problema.** Il lavoro non è finito quando funziona: è finito quando **qualcun altro può dimostrare che funziona**. Se chi prova non riesce a raggiungere la logica, il cancello salta — e non per colpa sua.
+**Cosa impone.** Separare la decisione dal mondo: la logica in funzioni che ricevono tutto e non toccano niente, il resto intorno. Le cinque cose che rendono impossibile una prova (l'ora, il caso, la rete, lo stato nascosto, l'effetto in mezzo al calcolo). Leggere le versioni prima di usare un impianto. Non cancellare ciò che si sostituisce. E riportare i numeri **con il confronto rispetto a prima**, perché un numero da solo non dice nulla.
+
+#### `casi-di-prova` → test-farm
+**Il problema.** Sapere che un test morde non dice **quali casi mancano**. Questa disciplina copre quel buco.
+**Cosa impone.** Non provare ogni valore ma ogni famiglia di valori. Concentrarsi sui **bordi**, dove si annidano quasi tutti i difetti di calcolo: il valore prima della soglia, quello esatto, quello dopo. La famiglia del nulla (assente, vuoto, solo spazi — sono cose diverse). Le transizioni **vietate**, non solo quelle permesse. E l'ultimo giro: cosa farà davvero una persona che non ha letto la specifica.
+
+#### `revisione-onesta` → code-reviewer
+**Il problema.** Una revisione può fallire in due direzioni e **costano uguale**: approvare un difetto manda in produzione un guasto; bloccare su un gusto ferma il lavoro e brucia la fiducia nel cancello, così la volta dopo nessuno lo prende sul serio.
+**Cosa impone.** Un rosso richiede un difetto dimostrabile, di quattro tipi soli. Poi le trappole, elencate da entrambi i lati: quelle che spingono a dire di sì (arrivare al diff già con la conclusione di chi l'ha scritto, fidarsi di «ho verificato», stancarsi a metà) e quelle che spingono a dire di no (il gusto, il rifacimento mascherato da rilievo, il rosso per prudenza quando non si è capito). E il campanello d'allarme: **due giri di fila senza nulla di concreto significa che stai validando, non dubitando.**
+
+---
+
+### Le tre trasversali
+
+#### `verifica-per-mutazione`
+**Il problema.** Un test verde non dimostra che il codice funziona. Dimostra che il test passa.
+**Cosa impone.** Rompere il codice di proposito e controllare che il test se ne accorga, poi riportare i numeri — *«venti mutazioni applicate, venti intercettate»*. Senza numeri non è una verifica: è un'affermazione.
+**Chi ce l'ha:** `test-farm` e `code-reviewer`, sempre attiva.
+
+#### `migrazioni-database`
+**Il problema.** Riscrivere una parte del database partendo da una versione vecchia, e cancellare senza accorgersene una protezione che qualcuno aveva aggiunto dopo. È già costato una riparazione d'emergenza su un progetto vero.
+**Cosa impone.** Guardare qual è davvero l'ultima versione prima di riscrivere, non tornare mai indietro, e rispondere per iscritto a una domanda sola: *quale protezione c'era prima e non c'è nella mia?*
+**Chi la apre:** `developer` e `code-reviewer`, quando il lavoro tocca il database.
+
+#### `sicurezza-database`
+**Il problema.** Proteggere una cosa solo nell'applicazione, lasciandola aperta a chi chiama il sistema da fuori saltando l'interfaccia.
+**Cosa impone.** La regola vive nel database, non nello schermo. Se una cosa non deve essere possibile, deve essere **impossibile** — anche con una chiamata diretta e un accesso valido.
+**Chi la apre:** `developer` e `code-reviewer`, quando il lavoro tocca permessi, ruoli o policy.
 
 ---
 

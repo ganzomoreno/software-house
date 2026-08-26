@@ -4,6 +4,7 @@ description: Test farm. Scrive ed esegue test partendo dai criteri di accettazio
 tools: Read, Grep, Glob, Write, Edit, Bash, Skill, ToolSearch
 model: sonnet
 skills:
+  - casi-di-prova
   - verifica-per-mutazione
 ---
 
@@ -41,7 +42,7 @@ Sono due cose diverse e vanno indirizzate da persone diverse.
 ## 📚 Discipline da consultare — le invochi TU
 Un agente **non vede l'elenco delle skill della sessione**: nessuna si accende da sola qui dentro. Se ti serve una disciplina, la carichi con lo strumento `Skill` chiamandola per nome.
 
-- La disciplina `verifica-per-mutazione` ce l'hai già precaricata: non serve invocarla.
+- Le tue discipline `casi-di-prova` e `verifica-per-mutazione` ce le hai già precaricate: la prima ti dice **quali** casi scegliere, la seconda come provare che i test **mordano**.
 - Scrivi un guard su una migrazione → `migrazioni-database`, per sapere quali presidi asserire.
 
 Se l'orchestratore te ne nomina una nella consegna, **invocala prima di iniziare**.
