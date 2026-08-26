@@ -21,6 +21,50 @@ MANIFESTO=".claude/.software-house"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 
+# ── controllo: il .gitignore del progetto ingoia .claude/? ──────────────
+# Difetto scoperto sul campo il 26/08/2026: un .gitignore con ".claude/*" e la
+# sola eccezione "!.claude/settings.json" rende la squadra INVISIBILE a git.
+# "git add .claude/" aggiunge zero file e il commit riesce senza portare nulla:
+# il fallimento è silenzioso, e si scopre solo a sessione nuova.
+sistema_gitignore() {
+  local ignorati=0 voce
+  while IFS= read -r voce; do
+    case "$voce" in ''|'#'*) continue ;; esac
+    if git check-ignore -q "$voce" 2>/dev/null; then ignorati=$((ignorati+1)); fi
+  done < "$MANIFESTO"
+
+  [ "$ignorati" -eq 0 ] && return 0
+
+  echo
+  echo "⚠  Il .gitignore di questo progetto esclude .claude/: ${ignorati} voci"
+  echo "   sarebbero invisibili a git, e il commit riuscirebbe senza portare nulla."
+  echo "→ Aggiungo le eccezioni necessarie a .gitignore…"
+
+  cat >> .gitignore <<'IGN'
+
+# Software house portatile — la squadra deve essere versionata, altrimenti non
+# arriva alle sessioni (in cloud, e a chiunque altro apra il progetto).
+!.claude/agents/
+!.claude/agents/**
+!.claude/skills/
+!.claude/skills/**
+!.claude/.software-house
+IGN
+
+  local rimasti=0
+  while IFS= read -r voce; do
+    case "$voce" in ''|'#'*) continue ;; esac
+    git check-ignore -q "$voce" 2>/dev/null && rimasti=$((rimasti+1))
+  done < "$MANIFESTO"
+
+  if [ "$rimasti" -gt 0 ]; then
+    echo "✗ ${rimasti} voci restano ignorate: il .gitignore ha regole più forti."
+    echo "  Sistemalo a mano prima di fare commit, altrimenti la squadra non arriva."
+  else
+    echo "✓ Eccezioni aggiunte: ora la squadra è versionabile."
+  fi
+}
+
 if [ ! -d .git ]; then
   echo "✗ Va eseguito dalla cartella principale di un progetto (non trovo .git)." >&2
   exit 1
@@ -53,6 +97,8 @@ for d in "$TMP/sh/plugins/software-house/skills/"*/; do
   cp -R "$d" ".claude/skills/$nome"
   echo ".claude/skills/$nome" >> "$MANIFESTO"
 done
+
+sistema_gitignore
 
 AGENTI=$(grep -c "^.claude/agents/" "$MANIFESTO")
 DISCIPLINE=$(grep -c "^.claude/skills/" "$MANIFESTO")
