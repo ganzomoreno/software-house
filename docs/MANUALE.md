@@ -703,6 +703,23 @@ git check-ignore -q .claude/skills/pipeline ; echo $?
 
 > Scoperto sul campo il 26/08/2026, alla prima installazione su un progetto vero. È il tipo di difetto peggiore: **fallisce in silenzio e riesce ad apparire riuscito.**
 
+### Passare da un modo all'altro
+
+Si può in entrambe le direzioni, e gli script se ne occupano da soli: ognuno legge il registro `.claude/.software-house`, rimuove **qualunque forma** avesse l'installazione precedente — file copiati o collegamenti — e poi scrive la propria.
+
+```bash
+# da copiata a collegata
+curl -fsSL https://raw.githubusercontent.com/ganzomoreno/software-house/main/scripts/collega.sh | bash
+
+# da collegata a copiata
+bash .software-house/scripts/collega.sh --stacca
+curl -fsSL https://raw.githubusercontent.com/ganzomoreno/software-house/main/scripts/installa.sh | bash
+```
+
+Verificato sul campo la transizione copia → collegamento: nessun residuo, contenuto leggibile attraverso i collegamenti, e git che registra 18 collegamenti e un puntatore invece di venti file.
+
+> **Fallo su un ramo di prova, non su quello di lavoro.** Finché il modo collegato non è verificato in una sessione vera, il ramo di lavoro deve continuare a portare l'installazione che sai funzionante. Se la prova va male si butta il ramo e non è successo niente.
+
 ### Quale scegliere
 
 | | Modo A — collegata | Modo B — copiata |

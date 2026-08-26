@@ -69,18 +69,24 @@ IGN
 
 [ -d .git ] || { echo "✗ Eseguilo dalla cartella principale di un progetto." >&2; exit 1; }
 
-rimuovi_collegamenti() {
+# Rimuove l'installazione precedente, QUALUNQUE forma avesse: collegamenti
+# (installazione a puntamento) oppure file e cartelle veri (installazione per
+# copia). Senza questo, passando dalla copia al collegamento i file vecchi
+# resterebbero e il collegamento finirebbe DENTRO la cartella esistente.
+rimuovi_installazione_precedente() {
   [ -f "$MANIFESTO" ] || return 0
+  local voce
   while IFS= read -r voce; do
     case "$voce" in ''|'#'*) continue ;; esac
-    [ -L "$voce" ] && rm -f "$voce"
+    # su un collegamento rm agisce sul collegamento, mai sulla destinazione
+    rm -rf "$voce"
   done < "$MANIFESTO"
   rm -f "$MANIFESTO"
 }
 
 if [ "$MODO" = "--stacca" ]; then
   echo "→ Rimuovo i collegamenti…"
-  rimuovi_collegamenti
+  rimuovi_installazione_precedente
   if [ -d "$SUB" ]; then
     git submodule deinit -f "$SUB" >/dev/null 2>&1 || true
     git rm -f "$SUB" >/dev/null 2>&1 || rm -rf "$SUB"
@@ -109,7 +115,7 @@ SORGENTE="$SUB/plugins/software-house"
 VERSIONE="$(grep -o '"version": *"[^"]*"' "$SORGENTE/.claude-plugin/plugin.json" | head -1 | cut -d'"' -f4)"
 
 echo "→ Rifaccio i collegamenti…"
-rimuovi_collegamenti
+rimuovi_installazione_precedente
 mkdir -p .claude/agents .claude/skills
 : > "$MANIFESTO"
 
