@@ -132,7 +132,15 @@ agenti specializzati con dodici discipline di mestiere, orchestrati da te
 
 Manuale: https://github.com/ganzomoreno/software-house/blob/main/docs/MANUALE.md
 
-Prima di qualsiasi altra cosa, VERIFICA che sia davvero arrivata e dimmi cosa vedi:
+CONTROLLO ZERO — su quale ramo sei davvero?
+Prima di ogni altra cosa esegui:
+  git branch --show-current
+  git log --oneline -1
+Dimmi il ramo. Se non è quello su cui mi aspettavo che fossi, FERMATI: ogni
+verifica fatta sul ramo sbagliato descrive un altro mondo, e ci fa inseguire un
+problema che non esiste.
+
+Poi VERIFICA che la squadra sia davvero arrivata e dimmi cosa vedi:
 
 1. Quali agenti hai a disposizione? Devono essere questi cinque:
    ux-designer · analista-funzionale · developer · test-farm · code-reviewer
@@ -187,6 +195,7 @@ Alla fine, oltre al lavoro, dimmi due cose:
 
 | Sintomo | Causa quasi certa | Rimedio |
 |---|---|---|
+| Manca tutto: agenti, discipline, e persino le correzioni al `.gitignore` che ricordi di aver fatto | **la sessione è partita da un ramo diverso da quello che credi** | `git branch --show-current` — è il primo comando di ogni verifica, prima di diagnosticare qualsiasi cosa |
 | Nessun agente, nessuna disciplina — ma altri plugin risultano caricati | la squadra non è mai stata copiata nel progetto, oppure la copia non è sul ramo da cui è partita la sessione | esegui lo script della Fase 1 e verifica su quale ramo è finita la cartella `.claude/` |
 | Lo script dice che ha installato, il commit è riuscito, e la squadra non arriva | **il `.gitignore` del progetto esclude `.claude/`**: il commit è passato senza portare nulla | gli script dalla v0.9.0 lo rilevano e aggiungono le eccezioni da soli; se hai una versione più vecchia, controlla con `git check-ignore .claude/skills/pipeline` |
 | Nessun agente, e nel `settings.json` c'è la dichiarazione del marketplace | è la trappola: quella dichiarazione **non installa il plugin** ([issue #32606](https://github.com/anthropics/claude-code/issues/32606)) | usa lo script di copia diretta, non il marketplace |

@@ -3,7 +3,7 @@
 > **Cos'è questo documento.** Il manuale tecnico-funzionale completo: come funziona la squadra, cosa fa ognuno, quali discipline possiede, come si installa, come si estende.
 > **Com'è fatto.** A cipolla: ogni strato è più profondo del precedente. Fermati quando ti basta. Lo **Strato 0** si legge in un minuto; l'**Appendice** contiene ogni dettaglio.
 > **Per chi.** Il Business che vuole capire e spiegare · chi apre una sessione e deve lavorare · chi vuole estendere il metodo.
-> Ultimo aggiornamento: 2026-08-26 · plugin v0.9.0
+> Ultimo aggiornamento: 2026-08-26 · plugin v0.10.0
 
 **Documenti collegati:** il *perché* di tutto questo, e il piano, stanno in [`METODO.md`](METODO.md). Il modello da compilare su ogni progetto è [`../templates/CONTESTO-PROGETTO.md`](../templates/CONTESTO-PROGETTO.md).
 
@@ -671,6 +671,18 @@ Costo: duemila righe duplicate nella storia del progetto, e il rischio che qualc
 
 Anche questo è **rieseguibile** e rimuove la copia precedente prima di riscrivere.
 
+### ⚠️ La trappola del ramo sbagliato
+
+Una sessione parte dal ramo che le viene indicato, e **non è sempre quello che credi**. Su un progetto con più ambienti si può chiedere una sessione su un ramo e ritrovarsi su un altro: da lì il progetto appare completamente diverso — file che mancano, `.gitignore` senza le correzioni, la squadra assente.
+
+**Il sintomo è indistinguibile da un'installazione fallita**, e porta a diagnosticare un problema che su quel ramo esiste ma altrove no.
+
+```bash
+git branch --show-current   # il primo comando di ogni verifica
+```
+
+> Ci siamo cascati il 26/08/2026: un'intera diagnosi condotta su un ramo che discendeva da `main`, mentre la squadra era già installata e funzionante sul ramo di lavoro vero. **Il primo comando di ogni verifica è quello che dice dove sei.**
+
 ### ⚠️ La trappola del `.gitignore`
 
 Molti progetti hanno nel `.gitignore` una riga come `.claude/*` con la sola eccezione `!.claude/settings.json` — nasce per non versionare le impostazioni personali, ed è ragionevole.
@@ -680,8 +692,11 @@ Molti progetti hanno nel `.gitignore` una riga come `.claude/*` con la sola ecce
 Entrambi gli script, dalla **v0.9.0**, lo rilevano e aggiungono da soli le eccezioni necessarie, dicendo cosa hanno fatto. Per controllare a mano:
 
 ```bash
-git check-ignore .claude/skills/pipeline   # se stampa qualcosa, sei nella trappola
+git check-ignore -q .claude/skills/pipeline ; echo $?
+# 0 = ignorato, sei nella trappola · 1 = non ignorato, tutto a posto
 ```
+
+> ⚠️ **Non giudicare dall'output di `git check-ignore -v`**: quel comando stampa l'ultima regola che corrisponde **anche quando è una negazione**. Dopo la correzione stampa righe che cominciano per `!` — e sono la prova che funziona, non che è rotto. Il codice di uscita è l'unico metro.
 
 > Scoperto sul campo il 26/08/2026, alla prima installazione su un progetto vero. È il tipo di difetto peggiore: **fallisce in silenzio e riesce ad apparire riuscito.**
 
